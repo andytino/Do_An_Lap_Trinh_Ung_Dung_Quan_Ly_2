@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PosApp
+namespace PosApp.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for CategoriesView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CategoriesView : UserControl
     {
-       public MainWindow()
+        public CategoriesView()
         {
             InitializeComponent();
         }
