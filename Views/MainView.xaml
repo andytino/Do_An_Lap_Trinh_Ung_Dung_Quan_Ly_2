@@ -25,6 +25,7 @@
         <DataTemplate DataType="{x:Type viewModel:CategoriesViewModel}">
             <local:CategoriesView/>
         </DataTemplate>
+
     </Window.Resources>
 
     <Border CornerRadius="10" 
@@ -34,7 +35,7 @@
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="{StaticResource primaryWinBorderColor}" Offset="0"/>
                 <GradientStop Color="{StaticResource secondaryWinBorderColor}" Offset="0.5"/>
-                <GradientStop Color="{StaticResource thirdWinBorderColor}" Offset="1"/>
+                <GradientStop Color="{StaticResource blue-100}" Offset="1"/>
             </LinearGradientBrush>
         </Border.BorderBrush>
 

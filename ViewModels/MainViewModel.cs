@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PosApp.ViewModels
@@ -26,13 +27,17 @@ namespace PosApp.ViewModels
         //Commands
         public ICommand ShowDashboardView { get; } 
         public ICommand ShowCategoriesView { get; }
+        public ICommand ShowLoginView { get; }
+        public ICommand ShowServerSetting { get; }
 
         public MainViewModel()
         {
             ShowDashboardView = new ViewModelCommand(ExecuteShowDashboardViewCommand);
             ShowCategoriesView = new ViewModelCommand(ExecuteShowCategoriesViewCommand);
+            ShowLoginView = new ViewModelCommand(ExecuteShowLoginViewCommand);
+            ShowServerSetting = new ViewModelCommand(ExecuteShowServerSettingViewCommand);
 
-            ExecuteShowDashboardViewCommand(null);
+            ExecuteShowLoginViewCommand(null);
 
         }
 
@@ -44,6 +49,17 @@ namespace PosApp.ViewModels
         private void ExecuteShowDashboardViewCommand(object obj)
         {
             CurrentChildView = new DashboardViewModel();
+        }
+
+        private void ExecuteShowLoginViewCommand(object? obj)
+        {
+            CurrentChildView = new LoginViewModel();
+        }
+
+        private void ExecuteShowServerSettingViewCommand(object? obj)
+        {
+            MessageBox.Show("test");
+            CurrentChildView = new ServerSettingViewModel();
         }
     }
 }

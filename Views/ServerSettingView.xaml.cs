@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PosApp.CustomControls
+namespace PosApp.Views
 {
     /// <summary>
-    /// Interaction logic for BindablePasswordBox.xaml
+    /// Interaction logic for ServerSettingView.xaml
     /// </summary>
-    public partial class BindablePasswordBox : UserControl
+    public partial class ServerSettingView : UserControl
     {
-        public BindablePasswordBox()
+        public ServerSettingView()
         {
             InitializeComponent();
         }
