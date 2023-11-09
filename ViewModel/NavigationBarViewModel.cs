@@ -35,7 +35,7 @@ namespace PosApp.ViewModel
             NavigationServerSettingCommand = new NavigateCommand<ServerSettingViewModel>(serverSettingService);
             LogoutCommand = new LogoutCommand(_accountStore);
 
-            _accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
+            //_accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
         }
 
         private void OnCurrentAccountChanged()

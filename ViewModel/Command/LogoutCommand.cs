@@ -18,7 +18,7 @@ namespace PosApp.ViewModel.Command
 
         public override void Execute(object parameter)
         {
-            _accountStore.Logout();
+            //_accountStore.Logout();
         }
     }
 }
