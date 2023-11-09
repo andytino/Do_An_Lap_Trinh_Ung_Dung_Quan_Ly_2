@@ -14,12 +14,16 @@ namespace PosApp.ViewModel
     public class MainLayoutViewModel : ViewModelBase
     {
         private readonly AccountStore _accountStore;
-
+        public NavigationBarViewModel NavigationBarViewModel { get; }
         public ICommand NavigateLoginCommand { get; }
-        public MainLayoutViewModel(AccountStore accountStore, NavigationStore navigationStore)
+        public MainLayoutViewModel(NavigationBarViewModel navigationBarViewModel,
+            AccountStore accountStore,
+            NavigationStore navigationStore,
+            NavigationService<LoginViewModel> loginNavigationService)
         {
+            NavigationBarViewModel = navigationBarViewModel;
             _accountStore = accountStore;
-            //NavigateLoginCommand = new NavigateCommand<LoginViewModel>(new NavigationService<LoginViewModel>(navigationStore, () => new LoginViewModel(navigationStore)));
+            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
         }
     }
 }

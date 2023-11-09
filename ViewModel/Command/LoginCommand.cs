@@ -25,7 +25,7 @@ namespace PosApp.ViewModel.Command
 
         public override void Execute(object parameter)
         {
-            MessageBox.Show($"{_accountStore?.CurrentAccount.Name}");
+            //MessageBox.Show($"{_accountStore?.CurrentAccount.Name}");
             _navigationService.Navigate();
         }
     }

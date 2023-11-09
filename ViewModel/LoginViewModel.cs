@@ -18,19 +18,22 @@ namespace PosApp.ViewModel
         public string Name => _accountStore.CurrentAccount?.Name;
         public string Email => _accountStore.CurrentAccount?.Email;
 
+        public NavigationBarViewModel NavigationBarViewModel { get; }
 
         public ICommand NavigateServerSettingCommand { get; }
         public ICommand LoginCommand { get; }
 
-        public LoginViewModel(ServerSettingStore serverSettingStore, NavigationStore navigationStore)
+        public LoginViewModel(NavigationBarViewModel navigationBarViewModel,
+            ServerSettingStore serverSettingStore,
+            NavigationStore navigationStore,
+            NavigationService<MainLayoutViewModel> mainLayoutNavigationService,
+            NavigationService<ServerSettingViewModel> serverSettingNavigationService)
         {
-            var navigationServerSettingServices = new NavigationService<ServerSettingViewModel>(navigationStore, () => new ServerSettingViewModel(serverSettingStore, navigationStore));
-            NavigateServerSettingCommand = new NavigateCommand<ServerSettingViewModel>(navigationServerSettingServices);
+            NavigationBarViewModel = navigationBarViewModel;
 
-            NavigationService< MainLayoutViewModel> navigationService =
-                new(navigationStore, () => new MainLayoutViewModel(_accountStore, navigationStore));
+            NavigateServerSettingCommand = new NavigateCommand<ServerSettingViewModel>(serverSettingNavigationService);
 
-            LoginCommand = new LoginCommand(this, _accountStore, navigationService);
+            LoginCommand = new LoginCommand(this, _accountStore, mainLayoutNavigationService);
         }
     }
 }

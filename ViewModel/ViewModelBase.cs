@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace PosApp.ViewModel
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -16,5 +16,6 @@ namespace PosApp.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public virtual void Dispose() { }
     }
 }

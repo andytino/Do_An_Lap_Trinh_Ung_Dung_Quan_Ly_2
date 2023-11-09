@@ -17,15 +17,19 @@ namespace PosApp.ViewModel
         public string? Server => _serverSettingStore.ServerSetting?.Server;
 
         public string? Database => _serverSettingStore.ServerSetting?.Database;
-
+        public NavigationBarViewModel NavigationBarViewModel { get; }
         public ICommand NavigateLoginCommand { get; }
 
-        public ServerSettingViewModel(ServerSettingStore serverSettingStore, NavigationStore navigationStore)
+        public ServerSettingViewModel(NavigationBarViewModel navigationBarViewModel, 
+            ServerSettingStore serverSettingStore, 
+            NavigationStore navigationStore,
+            NavigationService<LoginViewModel> loginNavigationService)
         {
+            NavigationBarViewModel = navigationBarViewModel;
             _serverSettingStore = serverSettingStore;
 
-            var navigationService = new NavigationService<LoginViewModel>(navigationStore, () => new LoginViewModel(serverSettingStore, navigationStore));
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(navigationService);
+            //var navigationService = new NavigationService<LoginViewModel>(navigationStore, () => new LoginViewModel(navigationBarViewModel, serverSettingStore, navigationStore));
+            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
         }
     }
 }

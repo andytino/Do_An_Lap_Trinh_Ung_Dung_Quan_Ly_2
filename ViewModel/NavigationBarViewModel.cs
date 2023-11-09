@@ -15,14 +15,22 @@ namespace PosApp.ViewModel
         public ICommand NavigateCategoriesCommand { get; }
         public ICommand NavigateLoginCommand { get; }
 
+        public ICommand NavigateMainLayoutCommand { get; }
+        public ICommand NavigationServerSettingCommand { get; }
 
-        public NavigationBarViewModel(NavigationService<DashboardViewModel> dashBoardNavigationService, 
-            NavigationService<CategoriesViewModel> categoriesNavigationService,
-            NavigationService<LoginViewModel> loginNavigationService)
+
+        public NavigationBarViewModel(NavigationService<MainLayoutViewModel> mainLayoutNavigationService,
+            //NavigationService<DashboardViewModel> dashBoardNavigationService,
+            //NavigationService<CategoriesViewModel> categoriesNavigationService,
+            NavigationService<LoginViewModel> loginNavigationService,
+            NavigationService<ServerSettingViewModel> serverSettingService)
         {
-            NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(dashBoardNavigationService);
-            NavigateCategoriesCommand = new NavigateCommand<CategoriesViewModel>(categoriesNavigationService);
+            //NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(dashBoardNavigationService);
+            //NavigateCategoriesCommand = new NavigateCommand<CategoriesViewModel>(categoriesNavigationService);
+            NavigateMainLayoutCommand = new NavigateCommand<MainLayoutViewModel>(mainLayoutNavigationService);
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
+            NavigationServerSettingCommand = new NavigateCommand<ServerSettingViewModel>(serverSettingService);
+
         }
     }
 }

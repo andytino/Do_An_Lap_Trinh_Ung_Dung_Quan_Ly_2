@@ -28,17 +28,16 @@ namespace PosApp
             _serverSettingStore = new();
             _navigationStore = new();
             _navigationBarViewModel = new NavigationBarViewModel(
-                CreateDashboardNavigationService(),
-                CreateCategoriesNavigationService(),
-                CreateLoginNavigationService());
+                CreateMainLayoutNavigationService(),
+                CreateLoginNavigationService(),
+                CreateServerSettingNavigationService());
         }
 
-
+        //CreateDashboardNavigationService(),
+        //CreateCategoriesNavigationService(),
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            //_navigationStore.CurrentViewModel = new LoginViewModel(_serverSettingStore, _navigationStore);
-
             NavigationService<LoginViewModel> loginNavigationService = CreateLoginNavigationService();
             loginNavigationService.Navigate();
 
@@ -54,20 +53,54 @@ namespace PosApp
             base.OnStartup(e);
         }
 
-        private NavigationService<CategoriesViewModel> CreateCategoriesNavigationService()
+        private NavigationService<MainLayoutViewModel> CreateMainLayoutNavigationService()
         {
-            return new NavigationService<CategoriesViewModel>(_navigationStore, () => new CategoriesViewModel(_navigationBarViewModel));
+            return new NavigationService<MainLayoutViewModel>(
+                _navigationStore,
+                () => new MainLayoutViewModel(
+                    _navigationBarViewModel,
+                    _accountStore,
+                    _navigationStore,
+                    CreateLoginNavigationService()
+                   )
+                );
         }
 
-        private NavigationService<DashboardViewModel> CreateDashboardNavigationService()
-        {
-            return new NavigationService<DashboardViewModel>(_navigationStore, () => new DashboardViewModel(_navigationBarViewModel));
-        }
+        //private NavigationService<CategoriesViewModel> CreateCategoriesNavigationService()
+        //{
+        //    return new NavigationService<CategoriesViewModel>(_navigationStore, () => new CategoriesViewModel(_navigationBarViewModel));
+        //}
+
+        //private NavigationService<DashboardViewModel> CreateDashboardNavigationService()
+        //{
+        //    return new NavigationService<DashboardViewModel>(_navigationStore, () => new DashboardViewModel(_navigationBarViewModel));
+        //}
 
         private NavigationService<LoginViewModel> CreateLoginNavigationService()
         {
-            return new NavigationService<LoginViewModel>(_navigationStore, () => new LoginViewModel(_serverSettingStore, _navigationStore));
+            return new NavigationService<LoginViewModel>(
+                _navigationStore,
+                () => new LoginViewModel(
+                    _navigationBarViewModel,
+                    _serverSettingStore,
+                    _navigationStore,
+                    CreateMainLayoutNavigationService(),
+                    CreateServerSettingNavigationService()
+                   )
+                );
         }
 
+        private NavigationService<ServerSettingViewModel> CreateServerSettingNavigationService()
+        {
+            return new NavigationService<ServerSettingViewModel>(
+                _navigationStore,
+                () => new ServerSettingViewModel(
+                    _navigationBarViewModel,
+                    _serverSettingStore,
+                    _navigationStore,
+                    CreateLoginNavigationService()
+                   )
+                );
+        }
     }
 }

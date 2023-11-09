@@ -18,6 +18,10 @@
             <DataTemplate DataType="{x:Type viewModels:ServerSettingViewModel}">
                 <views:ServerSettingView/>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModels:MainLayoutViewModel}">
+                <views:MainLayoutView/>
+            </DataTemplate>
         </ContentControl.Resources>
     </ContentControl>
 </Window>

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PosApp"
              xmlns:viewModel="clr-namespace:PosApp.ViewModel"
+             xmlns:component="clr-namespace:PosApp.Components"
              xmlns:view="clr-namespace:PosApp.View"
              >
     <Application.Resources>
@@ -17,7 +18,11 @@
         <DataTemplate DataType="{x:Type TypeName=viewModel:MainLayoutViewModel}">
             <view:MainLayoutView/>
         </DataTemplate>
-        
+
+        <DataTemplate DataType="{x:Type TypeName=viewModel:NavigationBarViewModel}">
+            <component:NavigationBar/>
+        </DataTemplate>
+
         <!--<ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/UIColors.xaml"/>
