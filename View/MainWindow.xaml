@@ -1,0 +1,38 @@
+﻿<Window x:Class="PosApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PosApp"
+        xmlns:viewModels="clr-namespace:PosApp.ViewModel"
+        xmlns:views="clr-namespace:PosApp.View"
+        xmlns:layout="clr-namespace:PosApp.Layouts"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <ContentControl Content="{Binding CurrentViewModel}">
+        <ContentControl.Resources>
+            <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
+                <views:LoginView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModels:ServerSettingViewModel}">
+                <views:ServerSettingView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModels:DashboardViewModel}">
+                <views:DashboardView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModels:CategoriesViewModel}">
+                <views:CategoriesView/>
+            </DataTemplate>
+
+
+
+            <DataTemplate DataType="{x:Type viewModels:MainLayoutViewModel}">
+                <layout:MainLayout/>
+            </DataTemplate>
+        </ContentControl.Resources>
+    </ContentControl>
+</Window>
