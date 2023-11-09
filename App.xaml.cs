@@ -20,23 +20,25 @@ namespace PosApp
         private readonly AccountStore _accountStore;
         private readonly ServerSettingStore _serverSettingStore;
         private readonly NavigationStore _navigationStore;
+        private readonly ModalNavigationStore _modalNavigationStore;
 
         public App()
         {
             _accountStore = new();
             _serverSettingStore = new();
             _navigationStore = new();
+            _modalNavigationStore = new();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            INavigationService<LoginViewModel> loginNavigationService = CreateLoginNavigationService();
+            INavigationService loginNavigationService = CreateLoginNavigationService();
             loginNavigationService.Navigate();
 
 
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_navigationStore)
+                DataContext = new MainViewModel(_navigationStore, _modalNavigationStore)
             };
 
             MainWindow.Show();
@@ -45,7 +47,7 @@ namespace PosApp
             base.OnStartup(e);
         }
 
-        private INavigationService<DashboardViewModel> CreateDashboardNavigationService()
+        private INavigationService CreateDashboardNavigationService()
         {
             return new MainLayoutNavigationService<DashboardViewModel>(
                 _navigationStore,
@@ -54,7 +56,7 @@ namespace PosApp
                 );
         }
 
-        private INavigationService<CategoriesViewModel> CreateCategoriesNavigationService()
+        private INavigationService CreateCategoriesNavigationService()
         {
             return new MainLayoutNavigationService<CategoriesViewModel>(
                 _navigationStore,
@@ -63,7 +65,7 @@ namespace PosApp
                 );
         }
 
-        private INavigationService<LoginViewModel> CreateLoginNavigationService()
+        private INavigationService CreateLoginNavigationService()
         {
             return new NavigationService<LoginViewModel>(
                 _navigationStore,
@@ -77,7 +79,7 @@ namespace PosApp
                 );
         }
 
-        private INavigationService<ServerSettingViewModel> CreateServerSettingNavigationService()
+        private INavigationService CreateServerSettingNavigationService()
         {
             return new NavigationService<ServerSettingViewModel>(
                 _navigationStore,
