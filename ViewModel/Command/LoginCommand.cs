@@ -13,18 +13,23 @@ namespace PosApp.ViewModel.Command
     public class LoginCommand : CommandBase
     {
         private readonly LoginViewModel _loginViewModel;
-        private readonly AccountStore _accountStore;
+        private readonly ServerSettingStore _serverSettingStore;
         private readonly INavigationService _navigationService;
 
-        public LoginCommand(LoginViewModel loginViewModel, AccountStore accountStore, INavigationService navigationService)
+        public LoginCommand(LoginViewModel loginViewModel, ServerSettingStore serverSettingStore, INavigationService navigationService)
         {
             _loginViewModel = loginViewModel;
-            _accountStore = accountStore;
+            _serverSettingStore = serverSettingStore;
             _navigationService = navigationService;
         }
 
         public override void Execute(object parameter)
         {
+            var username = _loginViewModel.Username;
+            var password = _loginViewModel.Password;
+            var serverName = _serverSettingStore.ServerSetting.ServerName;
+            var database = _serverSettingStore.ServerSetting.Database;
+
             _navigationService.Navigate();
         }
     }

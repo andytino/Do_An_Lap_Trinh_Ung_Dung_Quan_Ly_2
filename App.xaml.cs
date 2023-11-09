@@ -70,9 +70,8 @@ namespace PosApp
             return new NavigationService<LoginViewModel>(
                 _navigationStore,
                 () => new LoginViewModel(
+                     _serverSettingStore,
                     CreateNavigationBarViewModel,
-                    _serverSettingStore,
-                    _navigationStore,
                     CreateDashboardNavigationService(),
                     CreateServerSettingNavigationService()
                    )
@@ -84,9 +83,8 @@ namespace PosApp
             return new NavigationService<ServerSettingViewModel>(
                 _navigationStore,
                 () => new ServerSettingViewModel(
-                    CreateNavigationBarViewModel,
                     _serverSettingStore,
-                    _navigationStore,
+                    CreateNavigationBarViewModel,
                     CreateLoginNavigationService()
                    )
                 );

@@ -9,14 +9,21 @@ namespace PosApp.Stores
 {
     public class ServerSettingStore
     {
-        public ServerSetting _serverSetting;
+        private ServerSetting? _serverSetting;
         public ServerSetting ServerSetting
         {
             get => _serverSetting;
             set
             {
-                _serverSetting = value;
+                if (_serverSetting != null)
+                {
+                    _serverSetting = value;
+                    CurrentServerSettingChanged?.Invoke();
+                }
+
             }
         }
+
+        public event Action CurrentServerSettingChanged;
     }
 }

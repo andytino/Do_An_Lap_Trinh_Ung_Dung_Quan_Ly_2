@@ -14,22 +14,40 @@ namespace PosApp.ViewModel
     public class ServerSettingViewModel : ViewModelBase
     {
         private readonly ServerSettingStore _serverSettingStore;
-        public string? Server => _serverSettingStore.ServerSetting?.Server;
+        private string _serverName;
+        private string _database;
+        public string ServerName
+        {
+            get { return _serverName; }
+            set
+            {
+                _serverName = value;
+                OnPropertyChanged(nameof(ServerName));
+            }
 
-        public string? Database => _serverSettingStore.ServerSetting?.Database;
+        }
+
+        public string Database
+        {
+            get { return _database; }
+            set
+            {
+                _database = value;
+                OnPropertyChanged(nameof(Database));
+            }
+
+        }
+
         public NavigationBarViewModel NavigationBarViewModel { get; }
         public ICommand NavigateLoginCommand { get; }
 
-        public ServerSettingViewModel(Func<NavigationBarViewModel> createNavigationBarViewModel, 
-            ServerSettingStore serverSettingStore, 
-            NavigationStore navigationStore,
+        public ServerSettingViewModel(ServerSettingStore serverSettingStore, 
+            Func<NavigationBarViewModel> createNavigationBarViewModel,
             INavigationService loginNavigationService)
         {
-            NavigationBarViewModel = createNavigationBarViewModel();
             _serverSettingStore = serverSettingStore;
-
-            //var navigationService = new NavigationService<LoginViewModel>(navigationStore, () => new LoginViewModel(navigationBarViewModel, serverSettingStore, navigationStore));
-            NavigateLoginCommand = new NavigateCommand(loginNavigationService);
+            NavigationBarViewModel = createNavigationBarViewModel();
+            NavigateLoginCommand = new SaveServerSettingCommand(this, serverSettingStore, loginNavigationService);
         }
     }
 }

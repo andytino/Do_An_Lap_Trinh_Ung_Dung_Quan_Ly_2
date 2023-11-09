@@ -13,27 +13,50 @@ namespace PosApp.ViewModel
 {
     public class LoginViewModel : ViewModelBase
     {
-        private readonly AccountStore _accountStore;
+        private readonly ServerSettingStore _serverSettingStore;
 
-        public string Name => _accountStore.CurrentAccount?.Name;
-        public string Email => _accountStore.CurrentAccount?.Email;
+        private string _username;
+        private string _password;
+
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                _username = value;
+                OnPropertyChanged(nameof(Username));
+            }
+
+        }
+
+        public string Password
+        {
+            get { return _password; }
+            set
+            {
+                _password = value;
+                OnPropertyChanged(nameof(Password));
+            }
+
+        }
 
         public NavigationBarViewModel NavigationBarViewModel { get; }
 
         public ICommand NavigateServerSettingCommand { get; }
         public ICommand LoginCommand { get; }
 
-        public LoginViewModel(Func<NavigationBarViewModel> createNavigationBarViewModel,
-            ServerSettingStore serverSettingStore,
-            NavigationStore navigationStore,
+        public LoginViewModel(ServerSettingStore serverSettingStore, 
+            Func<NavigationBarViewModel> createNavigationBarViewModel,
             INavigationService dashboardNavigationService,
             INavigationService serverSettingNavigationService)
         {
+            _serverSettingStore = serverSettingStore;
+
             NavigationBarViewModel = createNavigationBarViewModel();
 
             NavigateServerSettingCommand = new NavigateCommand(serverSettingNavigationService);
 
-            LoginCommand = new LoginCommand(this, _accountStore, dashboardNavigationService);
+            LoginCommand = new LoginCommand(this, _serverSettingStore, dashboardNavigationService);
         }
     }
 }
