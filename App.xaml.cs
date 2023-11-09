@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using PosApp.Model;
 using PosApp.Services;
 using PosApp.Stores;
 using PosApp.ViewModel;
@@ -24,8 +25,22 @@ namespace PosApp
 
         public App()
         {
+            var config = ConfigurationManager.AppSettings;
+            var _server = config["Server"] ?? string.Empty;
+            var _database = config["Database"] ?? string.Empty;
+
+            ServerSetting serverSetting = new()
+            {
+                ServerName = _server,
+                Database = _database,
+            };
+
             _accountStore = new();
-            _serverSettingStore = new();
+            _serverSettingStore = new()
+            {
+                ServerSetting = serverSetting,
+            };
+
             _navigationStore = new();
             _modalNavigationStore = new();
         }

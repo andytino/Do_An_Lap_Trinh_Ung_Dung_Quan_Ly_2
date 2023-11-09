@@ -15,11 +15,11 @@ namespace PosApp.Stores
             get => _serverSetting;
             set
             {
-                if (_serverSetting != null)
-                {
-                    _serverSetting = value;
-                    CurrentServerSettingChanged?.Invoke();
-                }
+
+
+                _serverSetting = value;
+                CurrentServerSettingChanged?.Invoke();
+
 
             }
         }

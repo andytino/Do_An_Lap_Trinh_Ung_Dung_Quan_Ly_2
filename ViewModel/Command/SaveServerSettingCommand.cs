@@ -21,8 +21,8 @@ namespace PosApp.ViewModel.Command
         {
             _serverSettingViewModel = serverSettingViewModel;
             _serverSettingStore = serverSettingStore;
-
             _navigationService = navigationService;
+
         }
 
         public override void Execute(object parameter)
@@ -33,10 +33,7 @@ namespace PosApp.ViewModel.Command
                 Database = _serverSettingViewModel.Database,
             };
 
-            if (_serverSettingStore != null)
-            {
-                _serverSettingStore.ServerSetting = serverSetting;
-            }
+            _serverSettingStore.ServerSetting = serverSetting;
 
             _navigationService.Navigate();
         }
