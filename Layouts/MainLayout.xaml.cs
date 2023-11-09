@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PosApp.View
+namespace PosApp.Layouts
 {
     /// <summary>
-    /// Interaction logic for MainLayoutView.xaml
+    /// Interaction logic for MainLayout.xaml
     /// </summary>
-    public partial class MainLayoutView : UserControl
+    public partial class MainLayout : UserControl
     {
-        public MainLayoutView()
+        public MainLayout()
         {
             InitializeComponent();
         }

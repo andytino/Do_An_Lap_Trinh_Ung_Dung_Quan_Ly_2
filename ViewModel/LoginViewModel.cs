@@ -23,17 +23,17 @@ namespace PosApp.ViewModel
         public ICommand NavigateServerSettingCommand { get; }
         public ICommand LoginCommand { get; }
 
-        public LoginViewModel(NavigationBarViewModel navigationBarViewModel,
+        public LoginViewModel(Func<NavigationBarViewModel> createNavigationBarViewModel,
             ServerSettingStore serverSettingStore,
             NavigationStore navigationStore,
-            NavigationService<MainLayoutViewModel> mainLayoutNavigationService,
-            NavigationService<ServerSettingViewModel> serverSettingNavigationService)
+            INavigationService<DashboardViewModel> dashboardNavigationService,
+            INavigationService<ServerSettingViewModel> serverSettingNavigationService)
         {
-            NavigationBarViewModel = navigationBarViewModel;
+            NavigationBarViewModel = createNavigationBarViewModel();
 
             NavigateServerSettingCommand = new NavigateCommand<ServerSettingViewModel>(serverSettingNavigationService);
 
-            LoginCommand = new LoginCommand(this, _accountStore, mainLayoutNavigationService);
+            LoginCommand = new LoginCommand(this, _accountStore, dashboardNavigationService);
         }
     }
 }

@@ -20,12 +20,12 @@ namespace PosApp.ViewModel
         public NavigationBarViewModel NavigationBarViewModel { get; }
         public ICommand NavigateLoginCommand { get; }
 
-        public ServerSettingViewModel(NavigationBarViewModel navigationBarViewModel, 
+        public ServerSettingViewModel(Func<NavigationBarViewModel> createNavigationBarViewModel, 
             ServerSettingStore serverSettingStore, 
             NavigationStore navigationStore,
-            NavigationService<LoginViewModel> loginNavigationService)
+            INavigationService<LoginViewModel> loginNavigationService)
         {
-            NavigationBarViewModel = navigationBarViewModel;
+            NavigationBarViewModel = createNavigationBarViewModel();
             _serverSettingStore = serverSettingStore;
 
             //var navigationService = new NavigationService<LoginViewModel>(navigationStore, () => new LoginViewModel(navigationBarViewModel, serverSettingStore, navigationStore));

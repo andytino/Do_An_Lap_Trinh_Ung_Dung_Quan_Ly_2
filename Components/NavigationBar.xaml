@@ -23,9 +23,9 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Column="0" Text="Navigation"/>
-  
-        <Button Grid.Row="1" Command="{Binding NavigationServerSettingCommand}" Content="Server"/>
-        <Button Grid.Row="2" Command="{Binding NavigateLoginCommand}" Content="Login"/>
-        
+
+        <Button Grid.Row="2" Command="{Binding NavigateDashboardCommand}" Content="Dashboard"/>
+        <Button Grid.Row="3" Command="{Binding NavigateCategoriesCommand}" Content="Categories"/>
+        <Button Grid.Row="4" Command="{Binding LogoutCommand}" Content="Logout"/>
     </Grid>
 </UserControl>

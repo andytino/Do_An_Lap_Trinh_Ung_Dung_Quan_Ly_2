@@ -10,9 +10,9 @@ namespace PosApp.ViewModel
     {
         public NavigationBarViewModel NavigationBarViewModel { get; }
 
-        public DashboardViewModel(NavigationBarViewModel navigationBarViewModel)
+        public DashboardViewModel()
         {
-            NavigationBarViewModel = navigationBarViewModel;
+            
         }
     }
 }

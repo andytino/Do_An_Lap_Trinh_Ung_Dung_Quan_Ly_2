@@ -14,9 +14,9 @@ namespace PosApp.ViewModel.Command
     {
         private readonly LoginViewModel _loginViewModel;
         private readonly AccountStore _accountStore;
-        private readonly NavigationService<MainLayoutViewModel> _navigationService;
+        private readonly INavigationService<DashboardViewModel> _navigationService;
 
-        public LoginCommand(LoginViewModel loginViewModel, AccountStore accountStore, NavigationService<MainLayoutViewModel> navigationService)
+        public LoginCommand(LoginViewModel loginViewModel, AccountStore accountStore, INavigationService<DashboardViewModel> navigationService)
         {
             _loginViewModel = loginViewModel;
             _accountStore = accountStore;
@@ -25,7 +25,6 @@ namespace PosApp.ViewModel.Command
 
         public override void Execute(object parameter)
         {
-            //MessageBox.Show($"{_accountStore?.CurrentAccount.Name}");
             _navigationService.Navigate();
         }
     }

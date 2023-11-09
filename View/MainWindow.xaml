@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:PosApp"
         xmlns:viewModels="clr-namespace:PosApp.ViewModel"
         xmlns:views="clr-namespace:PosApp.View"
+        xmlns:layout="clr-namespace:PosApp.Layouts"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
@@ -19,8 +20,18 @@
                 <views:ServerSettingView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModels:DashboardViewModel}">
+                <views:DashboardView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModels:CategoriesViewModel}">
+                <views:CategoriesView/>
+            </DataTemplate>
+
+
+
             <DataTemplate DataType="{x:Type viewModels:MainLayoutViewModel}">
-                <views:MainLayoutView/>
+                <layout:MainLayout/>
             </DataTemplate>
         </ContentControl.Resources>
     </ContentControl>

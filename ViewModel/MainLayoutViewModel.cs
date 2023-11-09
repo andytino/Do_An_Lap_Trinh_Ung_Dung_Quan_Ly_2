@@ -13,17 +13,22 @@ namespace PosApp.ViewModel
 {
     public class MainLayoutViewModel : ViewModelBase
     {
-        private readonly AccountStore _accountStore;
+        //private readonly AccountStore _accountStore;
         public NavigationBarViewModel NavigationBarViewModel { get; }
-        public ICommand NavigateLoginCommand { get; }
-        public MainLayoutViewModel(NavigationBarViewModel navigationBarViewModel,
-            AccountStore accountStore,
-            NavigationStore navigationStore,
-            NavigationService<LoginViewModel> loginNavigationService)
+        public ViewModelBase ContentViewModel { get; }
+
+        public MainLayoutViewModel(NavigationBarViewModel navigationBarViewModel, ViewModelBase contentViewModel)
         {
             NavigationBarViewModel = navigationBarViewModel;
-            _accountStore = accountStore;
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
+            ContentViewModel = contentViewModel;
+        }
+
+        public override void Dispose()
+        {
+            NavigationBarViewModel.Dispose();
+            ContentViewModel.Dispose();
+
+            base.Dispose();
         }
     }
 }
