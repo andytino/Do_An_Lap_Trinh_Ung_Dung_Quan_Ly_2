@@ -23,16 +23,16 @@ namespace PosApp.ViewModel
         public ICommand LogoutCommand { get; }
 
         public NavigationBarViewModel(
-            INavigationService<DashboardViewModel> dashBoardNavigationService,
-            INavigationService<CategoriesViewModel> categoriesNavigationService,
-            INavigationService<LoginViewModel> loginNavigationService,
-            INavigationService<ServerSettingViewModel> serverSettingService)
+            INavigationService dashBoardNavigationService,
+            INavigationService categoriesNavigationService,
+            INavigationService loginNavigationService,
+            INavigationService serverSettingService)
         {
-            NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(dashBoardNavigationService);
-            NavigateCategoriesCommand = new NavigateCommand<CategoriesViewModel>(categoriesNavigationService);
+            NavigateDashboardCommand = new NavigateCommand(dashBoardNavigationService);
+            NavigateCategoriesCommand = new NavigateCommand(categoriesNavigationService);
 
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
-            NavigationServerSettingCommand = new NavigateCommand<ServerSettingViewModel>(serverSettingService);
+            NavigateLoginCommand = new NavigateCommand(loginNavigationService);
+            NavigationServerSettingCommand = new NavigateCommand(serverSettingService);
             LogoutCommand = new LogoutCommand(_accountStore);
 
             //_accountStore.CurrentAccountChanged += OnCurrentAccountChanged;

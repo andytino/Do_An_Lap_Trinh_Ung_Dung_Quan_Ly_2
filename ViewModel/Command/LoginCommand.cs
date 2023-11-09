@@ -14,9 +14,9 @@ namespace PosApp.ViewModel.Command
     {
         private readonly LoginViewModel _loginViewModel;
         private readonly AccountStore _accountStore;
-        private readonly INavigationService<DashboardViewModel> _navigationService;
+        private readonly INavigationService _navigationService;
 
-        public LoginCommand(LoginViewModel loginViewModel, AccountStore accountStore, INavigationService<DashboardViewModel> navigationService)
+        public LoginCommand(LoginViewModel loginViewModel, AccountStore accountStore, INavigationService navigationService)
         {
             _loginViewModel = loginViewModel;
             _accountStore = accountStore;

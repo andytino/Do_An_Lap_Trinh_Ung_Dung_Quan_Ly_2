@@ -6,12 +6,13 @@
         xmlns:local="clr-namespace:PosApp"
         xmlns:viewModels="clr-namespace:PosApp.ViewModel"
         xmlns:views="clr-namespace:PosApp.View"
-        xmlns:layout="clr-namespace:PosApp.Layouts"
+        xmlns:layout="clr-namespace:PosApp.Layouts" 
+        xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
-    <ContentControl Content="{Binding CurrentViewModel}">
-        <ContentControl.Resources>
+    <Grid>
+        <Grid.Resources>
             <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
                 <views:LoginView/>
             </DataTemplate>
@@ -28,11 +29,15 @@
                 <views:CategoriesView/>
             </DataTemplate>
 
-
-
             <DataTemplate DataType="{x:Type viewModels:MainLayoutViewModel}">
                 <layout:MainLayout/>
             </DataTemplate>
-        </ContentControl.Resources>
-    </ContentControl>
+        </Grid.Resources>
+
+        <custom:Modal Panel.ZIndex="100" IsOpen="{Binding isOpen}">
+            <ContentControl Content="{Binding CurrentModelViewModel}"/>
+        </custom:Modal>
+
+        <ContentControl Content="{Binding CurrentViewModel}"/>
+    </Grid>
 </Window>
