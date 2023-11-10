@@ -10,6 +10,7 @@ using PosApp.Services;
 using PosApp.Model;
 using System.Windows;
 using System.ComponentModel;
+using System.Security.Cryptography;
 
 namespace PosApp.ViewModel
 {
@@ -19,7 +20,7 @@ namespace PosApp.ViewModel
 
         private string _username;
         private string _password;
-
+        private bool _rememberPassword;
         public string Username
         {
             get { return _username; }
@@ -28,7 +29,6 @@ namespace PosApp.ViewModel
                 _username = value;
                 OnPropertyChanged(nameof(Username));
             }
-
         }
 
         public string Password
@@ -42,7 +42,16 @@ namespace PosApp.ViewModel
                     OnPropertyChanged(nameof(Password));
                 }
             }
+        }
 
+        public bool RememberPassword
+        {
+            get { return _rememberPassword; }
+            set
+            {
+                _rememberPassword = value;
+                OnPropertyChanged(nameof(RememberPassword));
+            }
         }
 
         public NavigationBarViewModel NavigationBarViewModel { get; }
@@ -56,12 +65,16 @@ namespace PosApp.ViewModel
             INavigationService dashboardNavigationService,
             INavigationService serverSettingNavigationService)
         {
+            LoadAccountStorage();
+
             _serverSettingStore = serverSettingStore;
+
             NavigationBarViewModel = createNavigationBarViewModel();
 
             NavigateServerSettingCommand = new NavigateCommand(serverSettingNavigationService);
 
             LoginCommand = new LoginCommand(this, _serverSettingStore, dashboardNavigationService);
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -69,6 +82,37 @@ namespace PosApp.ViewModel
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void LoadAccountStorage()
+        {
+            var config = System.Configuration.ConfigurationManager.AppSettings;
+
+            //int isRememberPassword = int.Parse(config["RememberPassword"] ?? string.Empty) | 0;
+
+            Username = config["Username"] ?? string.Empty;
+            string passwordIn64 = config["Password"] ?? string.Empty;
+            var entropyIn64 = config["Entropy"] ?? string.Empty;
+            var isRememberPassword = config["RememberPassword"] ?? "0";
+
+            if (passwordIn64.Length > 0)
+            {
+                var passwordInBytes = Convert.FromBase64String(passwordIn64);
+                var entropyInBytes = Convert.FromBase64String(entropyIn64);
+                var unencryptedPassword = ProtectedData.Unprotect(passwordInBytes, entropyInBytes, DataProtectionScope.CurrentUser);
+
+                Password = Encoding.UTF8.GetString(unencryptedPassword);
+
+            }
+
+            if(isRememberPassword == "1")
+            {
+                RememberPassword = true;
+            } else
+            {
+                RememberPassword = false;
+            }
+            
         }
     }
 }

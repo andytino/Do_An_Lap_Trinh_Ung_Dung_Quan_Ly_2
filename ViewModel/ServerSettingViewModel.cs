@@ -24,7 +24,6 @@ namespace PosApp.ViewModel
                 _serverName = value;
                 OnPropertyChanged(nameof(ServerName));
             }
-
         }
 
         public string Database
@@ -35,19 +34,23 @@ namespace PosApp.ViewModel
                 _database = value;
                 OnPropertyChanged(nameof(Database));
             }
-
         }
 
         public NavigationBarViewModel NavigationBarViewModel { get; }
         public ICommand NavigateLoginCommand { get; }
+        public ICommand CancelCommand { get; }
 
         public ServerSettingViewModel(ServerSettingStore serverSettingStore, 
             Func<NavigationBarViewModel> createNavigationBarViewModel,
             INavigationService loginNavigationService)
         {
+            ServerName = serverSettingStore.ServerSetting.ServerName;
+            Database = serverSettingStore.ServerSetting.Database;
+
             _serverSettingStore = serverSettingStore;
             NavigationBarViewModel = createNavigationBarViewModel();
             NavigateLoginCommand = new SaveServerSettingCommand(this, serverSettingStore, loginNavigationService);
+            CancelCommand = new NavigateCommand(loginNavigationService);
         }
     }
 }

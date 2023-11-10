@@ -16,6 +16,7 @@
     <Color x:Key="red-50">#FFE1E1</Color>
     <Color x:Key="red-100">#F15843</Color>
 
+    <Color x:Key="blue-40">#F4F9FF</Color>
     <Color x:Key="blue-50">#ECF3FF</Color>
     <Color x:Key="blue-60">#B5D1FF</Color>
     <Color x:Key="blue-65">#ADC1DB</Color>
@@ -28,6 +29,9 @@
     <Color x:Key="yellow-100">#FFCE69</Color>
 
     <Color x:Key="gray-100">#BEBEBE</Color>
+    <Color x:Key="gray-200">#545454</Color>
+    <Color x:Key="gray-210">#5F5A5B</Color>
+    <Color x:Key="gray-300">#19191B</Color>
 
     <!--Font Colors-->
     <SolidColorBrush x:Key="primaryColor" Color="#3B86FF"/>
@@ -36,9 +40,14 @@
     <!--Panel Colors-->
     <SolidColorBrush x:Key="panelPrimaryColor" Color="#3B86FF"/>
     <SolidColorBrush x:Key="panelSecondaryColor" Color="#8B9CB3"/>
+    <SolidColorBrush x:Key="panelBlue40Color" Color="#F4F9FF"/>
+    <SolidColorBrush x:Key="panelBlue50Color" Color="#B5D1FF"/>
     <SolidColorBrush x:Key="panelBlue60Color" Color="#B5D1FF"/>
     <SolidColorBrush x:Key="panelblue65Color" Color="#ADC1DB"/>
     <SolidColorBrush x:Key="panelBlue100Color" Color="#82B2FF"/>
     <SolidColorBrush x:Key="panelGray100Color" Color="#BEBEBE"/>
+    <SolidColorBrush x:Key="panelGray200Color" Color="#545454"/>
+    <SolidColorBrush x:Key="panelGray210Color" Color="#5F5A5B"/>
+    <SolidColorBrush x:Key="panelGray300Color" Color="#19191B"/>
 
 </ResourceDictionary>

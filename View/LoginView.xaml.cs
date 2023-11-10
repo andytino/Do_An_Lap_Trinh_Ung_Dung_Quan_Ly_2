@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,24 +31,22 @@ namespace PosApp.View
 
         }
 
-        private void Image_Hide(object sender, MouseButtonEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //this.Hide();
-        }
+            var config = System.Configuration.ConfigurationManager.AppSettings;
 
-        private void Image_Close(object sender, MouseButtonEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
+            string passwordIn64 = config["Password"] ?? string.Empty;
+            var entropyIn64 = config["Entropy"] ?? string.Empty;
 
-        private void ButtonLogin_Click(object sender, RoutedEventArgs e)
-        {
+            if (passwordIn64.Length > 0)
+            {
+                var passwordInBytes = Convert.FromBase64String(passwordIn64);
+                var entropyInBytes = Convert.FromBase64String(entropyIn64);
+                var unencryptedPassword = ProtectedData.Unprotect(passwordInBytes, entropyInBytes, DataProtectionScope.CurrentUser);
 
-        }
+                passwordBox.Password = Encoding.UTF8.GetString(unencryptedPassword);
 
-        private void serverBtn_Click(object sender, RoutedEventArgs e)
-        {
-
+            }
         }
     }
 }

@@ -8,8 +8,13 @@
         xmlns:views="clr-namespace:PosApp.View"
         xmlns:layout="clr-namespace:PosApp.Layouts" 
         xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl"
+        xmlns:component="clr-namespace:PosApp.Components"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="true">
 
     <Grid>
         <Grid.Resources>
@@ -34,10 +39,16 @@
             </DataTemplate>
         </Grid.Resources>
 
-        <custom:Modal Panel.ZIndex="100" IsOpen="{Binding isOpen}">
+        <!--<custom:Modal Panel.ZIndex="100" IsOpen="{Binding isOpen}">
             <ContentControl Content="{Binding CurrentModelViewModel}"/>
-        </custom:Modal>
+        </custom:Modal>-->
 
-        <ContentControl Content="{Binding CurrentViewModel}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <component:TitleBar Grid.Row="0" Panel.ZIndex="999"/>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"/>
     </Grid>
 </Window>

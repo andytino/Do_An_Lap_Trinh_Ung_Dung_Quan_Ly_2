@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,20 +28,21 @@ namespace PosApp
         public App()
         {
             var config = ConfigurationManager.AppSettings;
-            var _server = config["Server"] ?? string.Empty;
-            var _database = config["Database"] ?? string.Empty;
+            string server = config["Server"] ?? string.Empty;
+            string database = config["Database"] ?? string.Empty;
 
             ServerSetting serverSetting = new()
             {
-                ServerName = _server,
-                Database = _database,
+                ServerName = server,
+                Database = database,
             };
 
-            _accountStore = new();
             _serverSettingStore = new()
             {
                 ServerSetting = serverSetting,
             };
+
+            _accountStore = new();
 
             _navigationStore = new();
             _modalNavigationStore = new();

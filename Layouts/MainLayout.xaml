@@ -8,15 +8,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <component:NavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <component:NavigationBar Grid.Column="0" DataContext="{Binding NavigationBarViewModel}"/>
 
-        <ContentControl Grid.Row="1" 
+        <ContentControl Grid.Column="1"
                         Content="{Binding ContentViewModel}"/>
+
+
 
     </Grid>
 </UserControl>

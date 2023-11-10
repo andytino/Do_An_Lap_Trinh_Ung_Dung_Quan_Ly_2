@@ -27,7 +27,6 @@ namespace PosApp.Services
 
         public void Navigate()
         {
-            MessageBox.Show("aa");
             _navigationStore.CurrentViewModel = new MainLayoutViewModel(_createNavigationBarViewModel(), _createViewModel());
         }
     }

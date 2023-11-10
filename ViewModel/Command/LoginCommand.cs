@@ -19,7 +19,9 @@ namespace PosApp.ViewModel.Command
         private readonly ServerSettingStore _serverSettingStore;
         private readonly INavigationService _navigationService;
 
-        public LoginCommand(LoginViewModel loginViewModel, ServerSettingStore serverSettingStore, INavigationService navigationService)
+        public LoginCommand(LoginViewModel loginViewModel,
+            ServerSettingStore serverSettingStore,
+            INavigationService navigationService)
         {
             _loginViewModel = loginViewModel;
             _serverSettingStore = serverSettingStore;
@@ -29,11 +31,10 @@ namespace PosApp.ViewModel.Command
         public override async void Execute(object parameter)
         {
             var username = _loginViewModel.Username;
-            var password = _loginViewModel.Password;
+            var password = _loginViewModel.Password ?? String.Empty;
             var serverName = _serverSettingStore.ServerSetting.ServerName;
             var database = _serverSettingStore.ServerSetting.Database;
-
-            
+            var rememberPassword = _loginViewModel.RememberPassword;
 
             var builder = new SqlConnectionStringBuilder();
 
@@ -66,7 +67,34 @@ namespace PosApp.ViewModel.Command
 
             if (success)
             {
-                MessageBox.Show("Connect successfully");
+                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+                if (rememberPassword)
+                {
+                    var passwordInBytes = Encoding.UTF8.GetBytes(password);
+                    var entropy = new byte[20];
+
+                    using (RNGCryptoServiceProvider rng = new())
+                    {
+                        rng.GetBytes(entropy);
+                    }
+                    var cypherText = ProtectedData.Protect(passwordInBytes, entropy, DataProtectionScope.CurrentUser);
+
+                    config.AppSettings.Settings["Username"].Value = username;
+                    config.AppSettings.Settings["Password"].Value = Convert.ToBase64String(cypherText);
+                    config.AppSettings.Settings["Entropy"].Value = Convert.ToBase64String(entropy);
+                    config.AppSettings.Settings["RememberPassword"].Value = "1";
+                }
+                else
+                {
+                    config.AppSettings.Settings["Username"].Value = "";
+                    config.AppSettings.Settings["Password"].Value = "";
+                    config.AppSettings.Settings["Entropy"].Value = "";
+                    config.AppSettings.Settings["RememberPassword"].Value = "0";
+                }
+
+                config.Save(ConfigurationSaveMode.Full);
+                ConfigurationManager.RefreshSection("appSettings");
 
                 _navigationService.Navigate();
             }
@@ -76,6 +104,6 @@ namespace PosApp.ViewModel.Command
             }
         }
 
-        
+
     }
 }

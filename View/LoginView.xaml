@@ -4,91 +4,104 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PosApp.View"
-             xmlns:helper="clr-namespace:PosApp.Helper"
+             xmlns:helper="clr-namespace:PosApp.Helper" 
+             xmlns:viewmodel="clr-namespace:PosApp.ViewModel" 
+             d:DataContext="{d:DesignInstance Type=viewmodel:LoginViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             >
-    <Border CornerRadius="20" 
-            Background="white">
+             Loaded="UserControl_Loaded">
+    <Border Background="white">
 
         <Border CornerRadius="20"
             BorderThickness="5"
             VerticalAlignment="Center"
             Opacity="0.95">
 
-            <StackPanel HorizontalAlignment="Center">
-                <TextBlock FontSize="20"
-                           FontWeight="Medium" 
-                           HorizontalAlignment="Center"
-                           Text="Login" 
-                           Margin="0,0,0,20"/>
+            <Grid>
+                <!-- Login Form -->
+                <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+                    <TextBlock FontSize="20"
+                               FontWeight="Medium" 
+                               HorizontalAlignment="Center"
+                               Text="LOGIN" 
+                               Margin="0,0,0,20"/>
 
-                <StackPanel  Orientation="Horizontal">
-                    <Label 
-                        Content="Username" 
-                        VerticalAlignment="Center"
-                        Width="80"
-                        Margin="0,0,20,0"
-                        FontWeight="Medium"/>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="300">
+                        <Label Content="Username" 
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"/>
+                        <Border Background="{StaticResource panelBlue40Color}" 
+                                Padding="10,10,5,10"
+                                CornerRadius="15">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/user.png" Width="20" Height="20" Margin="0,0,10,0"/>
+                                <TextBox x:Name="usernameTextBox" 
+                                         d:Text="server"
+                                         Text="{Binding Username}" 
+                                         TextWrapping="Wrap"
+                                         Background="Transparent"
+                                         Width="260"
+                                         BorderThickness="0"/>
+                            </StackPanel>
 
-                    <TextBox x:Name="usernameTextBox" 
-                             Text="{Binding Username}" 
-                             TextWrapping="Wrap"
-                             d:Text="server"
-                             Padding="5"
-                             Width="200"/>
-                </StackPanel>
+                        </Border>
 
-                <StackPanel  Orientation="Horizontal"
-                             HorizontalAlignment="Center"
-                             Margin="0,20,0,0">
+                    </StackPanel>
 
-                    <Label Content="Password"
-                           VerticalAlignment="Center"
-                           Width="80"
-                           Margin="0,0,20,0"
-                           FontWeight="Medium"/>
-                    <PasswordBox Padding="5"
-                                 Width="200"
-                                 helper:PasswordHelper.Attach="True"
-                                 helper:PasswordHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="300">
+                        <Label Content="Password"
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"
+                               Margin="0,10,0,0"/>
+                        <Border Padding="10,10,5,10" 
+                                Background="{StaticResource panelBlue40Color}" 
+                                CornerRadius="15">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/lock.png" Width="20" Height="20" Margin="0,0,10,0"/>
+                                <PasswordBox x:Name="passwordBox"
+                                     Background="Transparent"
+                                     Width="260"
+                                     BorderThickness="0"
+                                     helper:PasswordHelper.Attach="True"
+                                     helper:PasswordHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                </PasswordBox>
+                            </StackPanel>
+                        </Border>
 
-                <CheckBox x:Name="rememberCheckBox" 
-                              Content="Remember password" 
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center" 
-                              Margin="0,15,0,10"/>
+                    </StackPanel>
 
-                <Button Style="{StaticResource textLink}" 
-                            Content="Sever Setting" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            Margin="0,5,0,10"
-                            Command="{Binding NavigateServerSettingCommand}">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <TextBlock TextDecorations="Underline">
+                    <CheckBox x:Name="rememberCheckBox"
+                          IsChecked="{Binding RememberPassword}"
+                          Content="Remember password" 
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center" 
+                          Margin="0,15,0,10"/>
+
+                    <Button Style="{StaticResource textLink}"
+                        Content="Sever Setting" 
+                        VerticalAlignment="Center"   
+                        HorizontalAlignment="Center"
+                        Margin="0,5,0,10"
+                        Command="{Binding NavigateServerSettingCommand}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <TextBlock TextDecorations="Underline">
                                     <ContentPresenter />
-                            </TextBlock>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-                    <Button Style="{StaticResource primaryBtn}"
-                            Command="{Binding LoginCommand}"
-                            Content="Save" 
-                            VerticalAlignment="Center" 
-                            Margin="0,0,20,0">
+                                </TextBlock>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
 
-                    <Button Style="{StaticResource secondaryBtn}"
-                            Content="Cancel"
-                            VerticalAlignment="Center"/>
-                </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                        <Button Style="{StaticResource primaryBtn}"
+                            Command="{Binding LoginCommand}"
+                            Content="Login" 
+                            VerticalAlignment="Center">
+                        </Button>
+                    </StackPanel>
 
-            </StackPanel>
+                </StackPanel>
+            </Grid>
         </Border>
     </Border>
 </UserControl>

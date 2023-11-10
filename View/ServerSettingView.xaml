@@ -6,18 +6,20 @@
              xmlns:local="clr-namespace:PosApp.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Border CornerRadius="20" Background="white">
+    <Border Background="white">
         <Border CornerRadius="20"
             BorderThickness="5"
             VerticalAlignment="Center"
             Opacity="0.95">
 
             <StackPanel HorizontalAlignment="Center">
+
                 <TextBlock FontSize="20"
                            FontWeight="Medium" 
-                           Text="Server Setting"
+                           Text="SERVER SETTING"
                            HorizontalAlignment="Center"
-                           Margin="0,0,0,20"/>
+                           Margin="0,0,0,20"
+                           />
 
                 <StackPanel  Orientation="Horizontal">
                     <Label 
@@ -25,14 +27,20 @@
                         VerticalAlignment="Center"
                         Width="80"
                         Margin="0,0,20,0"
-                        FontWeight="Medium"/>
+                        FontWeight="Bold"/>
+                    <Border Padding="10,10,5,10" 
+                        Background="{StaticResource panelBlue40Color}" 
+                        CornerRadius="15">
+                        <TextBox x:Name="serverTextBox" 
+                                 Text="{Binding ServerName}" 
+                                 TextWrapping="Wrap"
+                                 d:Text="server"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 Padding="5"
+                                 Width="200"/>
+                    </Border>
 
-                    <TextBox x:Name="serverTextBox" 
-                             Text="{Binding ServerName}" 
-                             TextWrapping="Wrap"
-                             d:Text="server"
-                             Padding="5"
-                             Width="200"/>
                 </StackPanel>
 
                 <StackPanel  Orientation="Horizontal"
@@ -43,13 +51,21 @@
                            VerticalAlignment="Center"
                            Width="80"
                            Margin="0,0,20,0"
-                           FontWeight="Medium"/>
-                    <TextBox x:Name="databaseTextBox" 
-                             Text="{Binding Database}" 
-                             d:Text="database"
-                             TextWrapping="Wrap"
-                             Padding="5"
-                             Width="200"/>
+                           FontWeight="Bold"/>
+
+                    <Border Padding="10,10,5,10" 
+                        Background="{StaticResource panelBlue40Color}" 
+                        CornerRadius="15">
+                        <TextBox x:Name="databaseTextBox" 
+                                 Text="{Binding Database}" 
+                                 d:Text="database"
+                                 TextWrapping="Wrap"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 Padding="5"
+                                 Width="200"/>
+                    </Border>
+
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
@@ -60,6 +76,7 @@
                             Margin="0,0,20,0"/>
 
                     <Button Style="{StaticResource secondaryBtn}"
+                            Command="{Binding CancelCommand}"
                             Content="Cancel"
                             VerticalAlignment="Center"/>
                 </StackPanel>

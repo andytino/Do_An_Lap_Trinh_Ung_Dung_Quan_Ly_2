@@ -9,7 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Assets\Icons\favicon.ico" />
+    <None Remove="Assets\Icons\close.png" />
+    <None Remove="Assets\Icons\lock.png" />
+    <None Remove="Assets\Icons\minus.png" />
+    <None Remove="Assets\Icons\server.png" />
+    <None Remove="Assets\Icons\techShop.png" />
+    <None Remove="Assets\Icons\user.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icons\favicon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +29,15 @@
 
   <ItemGroup>
     <Folder Include="Assets\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icons\close.png" />
+    <Resource Include="Assets\Icons\lock.png" />
+    <Resource Include="Assets\Icons\minus.png" />
+    <Resource Include="Assets\Icons\server.png" />
+    <Resource Include="Assets\Icons\techShop.png" />
+    <Resource Include="Assets\Icons\user.png" />
   </ItemGroup>
 
 </Project>
