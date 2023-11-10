@@ -12,11 +12,13 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <component:NavigationBar Grid.Column="0" DataContext="{Binding NavigationBarViewModel}"/>
 
-        <ContentControl Grid.Column="1"
-                        Content="{Binding ContentViewModel}"/>
+        <Border Grid.Column="1" Background="{StaticResource panelBlue40Color}" CornerRadius="0,0,20,0">
+            <ContentControl Content="{Binding ContentViewModel}"/>
+        </Border>
+
 
 
 

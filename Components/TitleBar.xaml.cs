@@ -28,9 +28,9 @@ namespace PosApp.Components
         private void Window_Hide(object sender, MouseButtonEventArgs e)
         {
             Window window = Window.GetWindow(Application.Current.MainWindow);
-            if(window != null)
+            if (window != null)
             {
-                window.WindowState= WindowState.Minimized;
+                window.WindowState = WindowState.Minimized;
             }
         }
 
@@ -46,7 +46,23 @@ namespace PosApp.Components
             {
                 window.DragMove();
             }
-            
+
+        }
+
+        private void Window_Resize(object sender, MouseButtonEventArgs e)
+        {
+            Window window = Window.GetWindow(Application.Current.MainWindow);
+            if (window != null)
+            {
+                if (window.WindowState == WindowState.Maximized)
+                {
+                    window.WindowState = WindowState.Normal;
+                }
+                else if (window.WindowState == WindowState.Normal)
+                {
+                    window.WindowState = WindowState.Maximized;
+                }
+            }
         }
     }
 }

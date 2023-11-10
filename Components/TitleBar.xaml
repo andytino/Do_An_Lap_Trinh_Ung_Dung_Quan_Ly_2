@@ -5,10 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PosApp.Components"
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="800">
+             d:DesignHeight="40" d:DesignWidth="800">
     <Border CornerRadius="16,16,0,0" 
             Background="{StaticResource panelBlue40Color}" 
-            Height="30"
+            Height="40"
+            VerticalAlignment="Center"
+            Padding="0,10,0,10"
             MouseLeftButtonDown="Window_dragMove">
         <!--<Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -21,6 +23,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition/>
+                <ColumnDefinition Width="25"/>
                 <ColumnDefinition Width="25"/>
                 <ColumnDefinition Width="25"/>
                 <ColumnDefinition Width="5"/>
@@ -40,7 +43,7 @@
                            Grid.Column="1"
                            VerticalAlignment="Center"
                            Margin="5,0,0,0"/>
-
+            
             <Image RenderOptions.BitmapScalingMode="HighQuality" 
                            Width="16" Height="16" 
                            Source="/Assets/Icons/minus.png"
@@ -57,11 +60,28 @@
                     </Style>
                 </Image.Style>
             </Image>
+            
+            <Image RenderOptions.BitmapScalingMode="HighQuality" 
+                           Width="16" Height="16" 
+                           Source="/Assets/Icons/resize.png"
+                           Grid.Column="3"
+                           VerticalAlignment="Center" HorizontalAlignment="Center" MouseLeftButtonDown="Window_Resize" Cursor="Hand" >
+
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
 
             <Image RenderOptions.BitmapScalingMode="HighQuality" 
                            Width="16" Height="16" 
                            Source="/Assets/Icons/close.png"
-                           Grid.Column="3"
+                           Grid.Column="4"
                            VerticalAlignment="Center" HorizontalAlignment="Center" MouseLeftButtonDown="Window_Close" Cursor="Hand">
 
                 <Image.Style>

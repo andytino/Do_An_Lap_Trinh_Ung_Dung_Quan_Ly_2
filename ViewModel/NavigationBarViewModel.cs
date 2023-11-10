@@ -19,34 +19,33 @@ namespace PosApp.ViewModel
         public ICommand NavigateCategoriesCommand { get; }
         public ICommand NavigateLoginCommand { get; }
         public ICommand NavigationServerSettingCommand { get; }
+        public ICommand NavigationProductsCommand { get; }
+        public ICommand NavigationSalesCommand { get; }
+        public ICommand NavigationPurchasesCommand { get; }
 
         public ICommand LogoutCommand { get; }
 
         public NavigationBarViewModel(
+            AccountStore accountStore,
             INavigationService dashBoardNavigationService,
             INavigationService categoriesNavigationService,
             INavigationService loginNavigationService,
-            INavigationService serverSettingService)
+            INavigationService serverSettingService,
+            INavigationService productsService,
+            INavigationService salesService,
+            INavigationService purchasesService)
         {
+            _accountStore = accountStore;
+
             NavigateDashboardCommand = new NavigateCommand(dashBoardNavigationService);
             NavigateCategoriesCommand = new NavigateCommand(categoriesNavigationService);
-
             NavigateLoginCommand = new NavigateCommand(loginNavigationService);
             NavigationServerSettingCommand = new NavigateCommand(serverSettingService);
-            LogoutCommand = new LogoutCommand(_accountStore);
+            NavigationProductsCommand = new NavigateCommand(productsService);
+            NavigationSalesCommand = new NavigateCommand(salesService);
+            NavigationPurchasesCommand = new NavigateCommand(purchasesService);
 
-            //_accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
-        }
-
-        private void OnCurrentAccountChanged()
-        {
-            //OnPropertyChanged(nameof(isLogin));
-        }
-
-        public override void Dispose()
-        {
-            _accountStore.CurrentAccountChanged -= OnCurrentAccountChanged;
-            base.Dispose(); 
+            LogoutCommand = new LogoutCommand(_accountStore, loginNavigationService);
         }
     }
 }

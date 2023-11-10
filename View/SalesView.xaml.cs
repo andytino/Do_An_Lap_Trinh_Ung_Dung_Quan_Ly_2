@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace PosApp.View
 {
     /// <summary>
-    /// Interaction logic for CategoriesView.xaml
+    /// Interaction logic for SalesView.xaml
     /// </summary>
-    public partial class CategoriesView : UserControl
+    public partial class SalesView : UserControl
     {
-        public CategoriesView()
+        public SalesView()
         {
             InitializeComponent();
-        }
-
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

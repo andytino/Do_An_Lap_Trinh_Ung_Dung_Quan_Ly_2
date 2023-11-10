@@ -6,40 +6,60 @@
              xmlns:local="clr-namespace:PosApp.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="150">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Border Background="White" CornerRadius="0,0,0,20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Background="White" 
+            <Border Grid.Row="0" 
                 HorizontalAlignment="Center"
                 Width="150">
-            <TextBlock HorizontalAlignment="Center" Text="SHOP"/>
-        </Border>
+                <TextBlock HorizontalAlignment="Center" Text="SHOP"/>
+            </Border>
 
-        <Border Grid.Row="1" Background="White" Padding="5,10,5,0">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
+            <Border Grid.Row="1"  Padding="5,10,5,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <RadioButton Grid.Row="0" 
-                             Style="{StaticResource menuBtn}" 
-                             Command="{Binding NavigateDashboardCommand}" 
-                             Content="Dashboard"/>
-                <RadioButton Grid.Row="1"
-                             Style="{StaticResource menuBtn}" 
-                             Command="{Binding NavigateCategoriesCommand}" 
-                             Content="Categories"/>
-                <RadioButton Grid.Row="2"
-                             Style="{StaticResource menuBtn}"
-                             Command="{Binding LogoutCommand}" 
-                             Content="Logout"/>
-            </Grid>
-        </Border>
-    </Grid>
+                    <RadioButton Grid.Row="0" 
+                                 IsChecked="True"
+                                 Style="{StaticResource menuBtn}" 
+                                 Command="{Binding NavigateDashboardCommand}" 
+                                 Content="Dashboard"/>
+                    <RadioButton Grid.Row="1"
+                                 Style="{StaticResource menuBtn}" 
+                                 Command="{Binding NavigateCategoriesCommand}" 
+                                 Content="Categories"/>
+                    <RadioButton Grid.Row="2"
+                                 Style="{StaticResource menuBtn}" 
+                                 Command="{Binding NavigationProductsCommand}" 
+                                 Content="Products"/>
+                    <RadioButton Grid.Row="3"
+                                 Style="{StaticResource menuBtn}" 
+                                 Command="{Binding NavigationPurchasesCommand}" 
+                                 Content="Purchases"/>
+                    <RadioButton Grid.Row="4"
+                                 Style="{StaticResource menuBtn}" 
+                                 Command="{Binding NavigationSalesCommand}" 
+                                 Content="Sales"/>
+                    <RadioButton Grid.Row="5"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Bottom"
+                                 Style="{StaticResource menuBtn}"
+                                 Command="{Binding LogoutCommand}" 
+                                 Content="Logout"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+
 </UserControl>

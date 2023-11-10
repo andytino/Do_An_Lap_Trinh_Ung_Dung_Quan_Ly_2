@@ -82,6 +82,30 @@ namespace PosApp
                 CreateNavigationBarViewModel
                 );
         }
+        private INavigationService CreateProductsNavigationService()
+        {
+            return new MainLayoutNavigationService<ProductsViewModel>(
+                _navigationStore,
+                () => new ProductsViewModel(),
+                CreateNavigationBarViewModel
+                );
+        }
+        private INavigationService CreatePurchasesNavigationService()
+        {
+            return new MainLayoutNavigationService<PurchasesViewModel>(
+                _navigationStore,
+                () => new PurchasesViewModel(),
+                CreateNavigationBarViewModel
+                );
+        }
+        private INavigationService CreateSalesNavigationService()
+        {
+            return new MainLayoutNavigationService<SalesViewModel>(
+                _navigationStore,
+                () => new SalesViewModel(),
+                CreateNavigationBarViewModel
+                );
+        }
 
         private INavigationService CreateLoginNavigationService()
         {
@@ -111,10 +135,14 @@ namespace PosApp
 
         private NavigationBarViewModel CreateNavigationBarViewModel()
         {
-            return new NavigationBarViewModel(CreateDashboardNavigationService(),
+            return new NavigationBarViewModel(_accountStore,
+                CreateDashboardNavigationService(),
                 CreateCategoriesNavigationService(),
                 CreateLoginNavigationService(),
-                CreateServerSettingNavigationService());
+                CreateServerSettingNavigationService(),
+                CreateProductsNavigationService(),
+                CreateSalesNavigationService(),
+                CreatePurchasesNavigationService());
         }
     }
 }

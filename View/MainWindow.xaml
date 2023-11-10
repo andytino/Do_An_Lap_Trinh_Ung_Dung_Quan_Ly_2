@@ -12,6 +12,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowStartupLocation="CenterScreen"
+        WindowState="Normal"
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="true">
@@ -34,6 +35,18 @@
                 <views:CategoriesView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModels:ProductsViewModel}">
+                <views:ProductsView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModels:PurchasesViewModel}">
+                <views:PurchasesView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModels:SalesViewModel}">
+                <views:SalesView/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type viewModels:MainLayoutViewModel}">
                 <layout:MainLayout/>
             </DataTemplate>
@@ -44,11 +57,14 @@
         </custom:Modal>-->
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <component:TitleBar Grid.Row="0" Panel.ZIndex="999"/>
+
         <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"/>
+
+
     </Grid>
 </Window>
