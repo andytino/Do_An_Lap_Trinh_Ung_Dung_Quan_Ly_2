@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PosApp.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" d:Background="White">
-    
+             d:DesignHeight="500" d:DesignWidth="800" d:Background="White">
+
     <Border Background="white" Padding="40,20,40,20">
         <Border CornerRadius="20"
             BorderThickness="5"
@@ -105,10 +105,35 @@
                            Margin="0,0,20,0"
                            FontWeight="Bold"/>
 
-                    <Border Padding="10,10,5,10" 
-                            Background="Transparent" 
-                            CornerRadius="15" Width="215">
-                        <!--<Button Name="btnLoadFromFile" Click="Handle_UploadImage" Canvas.Left="308" Canvas.Top="327" HorizontalAlignment="Center" VerticalAlignment="Top">Load from File...</Button>-->
+                    <Border Background="Transparent"     
+                            CornerRadius="15" Width="215" BorderThickness="0" HorizontalAlignment="Left">
+                        <StackPanel>
+                            <Border Height="70" Width="70" BorderThickness="0" BorderBrush="Gray" Margin="0,0,0,10" HorizontalAlignment="Left">
+                                <Image x:Name="imgDynamic" 
+                                       RenderOptions.BitmapScalingMode="HighQuality" 
+                                       d:Source="/Assets/Icons/image.png" 
+                                       Source="{Binding CategoryImageSource}"
+                                       Width="70" Height="70"/>
+                            </Border>
+
+                            <Button x:Name="btnLoadFromFile" 
+                                    HorizontalAlignment="Left" 
+                                    VerticalAlignment="Top" 
+                                    BorderThickness="0" 
+                                    Padding="8,2,8,2" 
+                                    Background="Transparent" 
+                                    Cursor="Hand" 
+                                    Command="{Binding UploadCommand}">
+
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                    <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/imageUpload.png" Width="15" Height="15" Margin="0,0,5,0"/>
+                                    <Label Content="Load from File..."  FontWeight="Bold" BorderThickness="0" Cursor="Hand"/>
+                                </StackPanel>
+                            </Button>
+
+
+                        </StackPanel>
+
 
                     </Border>
 

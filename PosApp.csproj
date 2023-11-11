@@ -11,6 +11,8 @@
   <ItemGroup>
     <None Remove="Assets\Icons\close.png" />
     <None Remove="Assets\Icons\edit.png" />
+    <None Remove="Assets\Icons\image.png" />
+    <None Remove="Assets\Icons\imageUpload.png" />
     <None Remove="Assets\Icons\lock.png" />
     <None Remove="Assets\Icons\logout.png" />
     <None Remove="Assets\Icons\minus.png" />
@@ -39,6 +41,8 @@
 
   <ItemGroup>
     <Resource Include="Assets\Icons\close.png" />
+    <Resource Include="Assets\Icons\image.png" />
+    <Resource Include="Assets\Icons\imageUpload.png" />
     <Resource Include="Assets\Icons\lock.png" />
     <Resource Include="Assets\Icons\logout.png" />
     <Resource Include="Assets\Icons\minus.png" />
