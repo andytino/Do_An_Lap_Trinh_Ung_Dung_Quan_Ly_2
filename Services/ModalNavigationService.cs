@@ -13,7 +13,9 @@ namespace PosApp.Services
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly Func<TViewModel> _createViewModel;
 
-        public ModalNavigationService(ModalNavigationStore modalNavigationStore, Func<TViewModel> createViewModel)
+        public ModalNavigationService(
+            ModalNavigationStore modalNavigationStore, 
+            Func<TViewModel> createViewModel)
         {
             _modalNavigationStore = modalNavigationStore;
             _createViewModel = createViewModel;

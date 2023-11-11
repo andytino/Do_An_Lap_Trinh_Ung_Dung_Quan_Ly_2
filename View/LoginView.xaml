@@ -96,7 +96,7 @@
                         <Button Style="{StaticResource primaryBtn}"
                             Command="{Binding LoginCommand}"
                             Content="Login" 
-                            VerticalAlignment="Center">
+                            VerticalAlignment="Center" Width="100">
                         </Button>
                     </StackPanel>
 

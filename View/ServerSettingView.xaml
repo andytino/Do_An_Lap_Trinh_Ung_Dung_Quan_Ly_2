@@ -73,12 +73,12 @@
                             Command="{Binding NavigateLoginCommand}"
                             Content="Save" 
                             VerticalAlignment="Center" 
-                            Margin="0,0,20,0"/>
+                            Margin="0,0,20,0" Width="100"/>
 
                     <Button Style="{StaticResource secondaryBtn}"
                             Command="{Binding CancelCommand}"
                             Content="Cancel"
-                            VerticalAlignment="Center"/>
+                            VerticalAlignment="Center" Width="100"/>
                 </StackPanel>
 
             </StackPanel>

@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -19,7 +20,22 @@
 
         <TextBlock Grid.Row="1" Text="Products" Style="{StaticResource titlePage}"/>
 
-        <Border Grid.Row="2" Padding="20,0,20,100">
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Style="{StaticResource primaryBtn}" Grid.Column="2"  Command="{Binding AddCategoryCommand}" Width="150">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                    <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/plus.png" Width="15" Height="15" Margin="0,0,5,0"/>
+                    <Label Content="ADD PRODUCT" Background="Transparent" Foreground="White" FontWeight="Bold" BorderThickness="0" Cursor="Hand"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+        
+        <Border Grid.Row="3" Padding="20,20,20,100">
             <DataGrid ItemsSource="{Binding DataList}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="#" IsReadOnly="True" Width="auto"/>

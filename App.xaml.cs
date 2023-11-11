@@ -78,10 +78,19 @@ namespace PosApp
         {
             return new MainLayoutNavigationService<CategoriesViewModel>(
                 _navigationStore,
-                () => new CategoriesViewModel(),
+                () => new CategoriesViewModel(_modalNavigationStore),
                 CreateNavigationBarViewModel
                 );
         }
+
+        //private INavigationService CreateAddCategoryNavigationService()
+        //{
+        //    return new ModalNavigationService<AddCategoryViewModel>(
+        //        _modalNavigationStore,
+        //        () => new AddCategoryViewModel()
+        //        );
+        //}
+
         private INavigationService CreateProductsNavigationService()
         {
             return new MainLayoutNavigationService<ProductsViewModel>(
@@ -90,6 +99,9 @@ namespace PosApp
                 CreateNavigationBarViewModel
                 );
         }
+
+
+
         private INavigationService CreatePurchasesNavigationService()
         {
             return new MainLayoutNavigationService<PurchasesViewModel>(

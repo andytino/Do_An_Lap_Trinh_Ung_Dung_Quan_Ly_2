@@ -33,30 +33,54 @@
                     <RadioButton Grid.Row="0" 
                                  IsChecked="True"
                                  Style="{StaticResource menuBtn}" 
-                                 Command="{Binding NavigateDashboardCommand}" 
-                                 Content="Dashboard"/>
+                                 Command="{Binding NavigateDashboardCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/edit.png" Width="15" Height="15" Margin="0,0,5,0"/>
+                            <TextBlock Text="Dashboard"/>
+                        </StackPanel>
+                    </RadioButton>
                     <RadioButton Grid.Row="1"
                                  Style="{StaticResource menuBtn}" 
-                                 Command="{Binding NavigateCategoriesCommand}" 
-                                 Content="Categories"/>
+                                 Command="{Binding NavigateCategoriesCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/edit.png" Width="15" Height="15" Margin="0,0,5,0"/>
+                            <TextBlock Text="Categories"/>
+                        </StackPanel>
+                    </RadioButton>
                     <RadioButton Grid.Row="2"
                                  Style="{StaticResource menuBtn}" 
-                                 Command="{Binding NavigationProductsCommand}" 
-                                 Content="Products"/>
+                                 Command="{Binding NavigationProductsCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/edit.png" Width="15" Height="15" Margin="0,0,5,0"/>
+                            <TextBlock Text="Products"/>
+                        </StackPanel>
+                    </RadioButton>
                     <RadioButton Grid.Row="3"
                                  Style="{StaticResource menuBtn}" 
-                                 Command="{Binding NavigationPurchasesCommand}" 
-                                 Content="Purchases"/>
+                                 Command="{Binding NavigationPurchasesCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/edit.png" Width="15" Height="15" Margin="0,0,5,0"/>
+                            <TextBlock Text="Purchases"/>
+                        </StackPanel>
+                    </RadioButton>
                     <RadioButton Grid.Row="4"
                                  Style="{StaticResource menuBtn}" 
-                                 Command="{Binding NavigationSalesCommand}" 
-                                 Content="Sales"/>
+                                 Command="{Binding NavigationSalesCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/edit.png" Width="15" Height="15" Margin="0,0,5,0"/>
+                            <TextBlock Text="Sales"/>
+                        </StackPanel>
+                    </RadioButton>
                     <RadioButton Grid.Row="5"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Bottom"
                                  Style="{StaticResource menuBtn}"
-                                 Command="{Binding LogoutCommand}" 
-                                 Content="Logout"/>
+                                 Command="{Binding LogoutCommand}" Margin="0,0,0,10">
+                        <StackPanel Orientation="Horizontal">
+                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/logout.png" Width="10" Height="10" Margin="0,0,5,0"/>
+                            <TextBlock Text="Logout"/>
+                        </StackPanel>
+                    </RadioButton>
                 </Grid>
             </Border>
         </Grid>

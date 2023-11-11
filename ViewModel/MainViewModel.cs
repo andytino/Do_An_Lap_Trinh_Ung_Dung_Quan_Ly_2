@@ -15,7 +15,7 @@ namespace PosApp.ViewModel
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         public ViewModelBase CurrentModalViewModel => _modalNavigationStore.CurrentViewModel;
-        public bool IsOpenModal => _modalNavigationStore.IsOpen;
+        public bool IsOpenModal => _modalNavigationStore.IsOpenModal;
 
         public MainViewModel(NavigationStore navigationStore, ModalNavigationStore modalNavigationStore)
         {

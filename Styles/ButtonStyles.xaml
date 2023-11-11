@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
     <Style x:Key="menuBtn" TargetType="RadioButton">
         <Setter Property="Height" Value="30"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -78,8 +79,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Width="120" Height="40"
-                                        CornerRadius="20"
+                    <Border Width="{TemplateBinding Width}" Height="40"
+                                        CornerRadius="15"
                                         Background="{TemplateBinding Background}">
                         <ContentPresenter VerticalAlignment="Center" 
                                                       HorizontalAlignment="Center"/>
@@ -107,11 +108,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Width="120" Height="40"
-                                        CornerRadius="20"
+                    <Border Width="{TemplateBinding Width}" Height="40"
+                                        CornerRadius="15"
                                         Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center" 
-                                                      HorizontalAlignment="Center"/>
+                        <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

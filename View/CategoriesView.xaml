@@ -4,10 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PosApp.View"
+             xmlns:component="clr-namespace:PosApp.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" d:Background="{StaticResource panelBlue40Color}">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -16,12 +18,36 @@
         <Border Grid.Row="0">
             <TextBlock Text="Header"></TextBlock>
         </Border>
+        <TextBlock Grid.Row="1" Text="CATEGORIES" Style="{StaticResource titlePage}"/>
 
-        <TextBlock Grid.Row="1" Text="Categories" Style="{StaticResource titlePage}"/>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="2">
-            
+            <Button Style="{StaticResource primaryBtn}" Grid.Column="2"  Command="{Binding AddCategoryCommand}" Width="150">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                    <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/plus.png" Width="15" Height="15" Margin="0,0,5,0"/>
+                    <Label Content="ADD CATEGORY" Background="Transparent" Foreground="White" FontWeight="Bold" BorderThickness="0" Cursor="Hand"/>
+                </StackPanel>
+            </Button>
+        </Grid>
 
+        <Border Grid.Row="3" Padding="20,20,20,10">
+            <ItemsControl  ItemsSource="{Binding DataList}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <component:CardItem/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Border>
     </Grid>
 </UserControl>

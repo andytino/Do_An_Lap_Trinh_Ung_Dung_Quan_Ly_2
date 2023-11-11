@@ -20,7 +20,7 @@ namespace PosApp.Stores
                 OnCurrentViewModelChanged();
             }
         }
-        public bool IsOpen => CurrentViewModel != null;
+        public bool IsOpenModal => CurrentViewModel != null;
 
         public event Action CurrentViewModelChanged;
 

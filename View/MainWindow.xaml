@@ -35,6 +35,10 @@
                 <views:CategoriesView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModels:AddCategoryViewModel}">
+                <views:AddCategoryView/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type viewModels:ProductsViewModel}">
                 <views:ProductsView/>
             </DataTemplate>
@@ -52,10 +56,6 @@
             </DataTemplate>
         </Grid.Resources>
 
-        <!--<custom:Modal Panel.ZIndex="100" IsOpen="{Binding isOpen}">
-            <ContentControl Content="{Binding CurrentModelViewModel}"/>
-        </custom:Modal>-->
-
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -63,7 +63,12 @@
 
         <component:TitleBar Grid.Row="0" Panel.ZIndex="999"/>
 
-        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"/>
+        <Grid Grid.Row="1">
+            <custom:Modal Panel.ZIndex="100" IsOpen="{Binding IsOpenModal}">
+                <ContentControl Content="{Binding CurrentModalViewModel}"/>
+            </custom:Modal>
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+        </Grid>
 
 
     </Grid>
