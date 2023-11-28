@@ -15,12 +15,8 @@ namespace PosApp.Stores
             get => _serverSetting;
             set
             {
-
-
                 _serverSetting = value;
                 CurrentServerSettingChanged?.Invoke();
-
-
             }
         }
 

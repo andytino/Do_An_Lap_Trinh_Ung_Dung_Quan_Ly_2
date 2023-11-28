@@ -22,6 +22,7 @@
     <None Remove="Assets\Icons\techShop.png" />
     <None Remove="Assets\Icons\trash.png" />
     <None Remove="Assets\Icons\user.png" />
+    <None Remove="Assets\Images\Categories\product.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,10 +34,6 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="SimpleModal.WPF" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Assets\Images\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,21 +49,7 @@
     <Resource Include="Assets\Icons\techShop.png" />
     <Resource Include="Assets\Icons\trash.png" />
     <Resource Include="Assets\Icons\user.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Assets\Images\earbuds.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Images\laptop.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Images\smartPhone.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Images\smartwatch.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Resource Include="Assets\Images\Categories\product.png" />
   </ItemGroup>
 
 </Project>

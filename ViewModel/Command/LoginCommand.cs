@@ -16,14 +16,17 @@ namespace PosApp.ViewModel.Command
     public class LoginCommand : CommandBase
     {
         private readonly LoginViewModel _loginViewModel;
+        private readonly GlobalStore _globalStore;
         private readonly ServerSettingStore _serverSettingStore;
         private readonly INavigationService _navigationService;
 
         public LoginCommand(LoginViewModel loginViewModel,
+            GlobalStore globalStore,
             ServerSettingStore serverSettingStore,
             INavigationService navigationService)
         {
             _loginViewModel = loginViewModel;
+            _globalStore = globalStore;
             _serverSettingStore = serverSettingStore;
             _navigationService = navigationService;
         }
@@ -95,6 +98,13 @@ namespace PosApp.ViewModel.Command
 
                 config.Save(ConfigurationSaveMode.Full);
                 ConfigurationManager.RefreshSection("appSettings");
+
+                Global global = new()
+                {
+                    Connection = connection
+                };
+
+                _globalStore._currentGlobal = global;
 
                 _navigationService.Navigate();
             }

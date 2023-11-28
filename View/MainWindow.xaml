@@ -39,6 +39,10 @@
                 <views:AddCategoryView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModels:EditCategoryViewModel}">
+                <views:AddCategoryView/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type viewModels:ProductsViewModel}">
                 <views:ProductsView/>
             </DataTemplate>

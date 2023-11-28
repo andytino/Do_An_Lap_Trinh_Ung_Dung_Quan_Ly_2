@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PosApp.Services
 {
-    public class CompositeNavigationService
+    public class CompositeNavigationService: INavigationService
     {
         private readonly IEnumerable<INavigationService> _navigationServices;
 

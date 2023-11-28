@@ -20,5 +20,6 @@ namespace PosApp.ViewModel.Command
         {
             _navigationService.Navigate();
         }
+
     }
 }

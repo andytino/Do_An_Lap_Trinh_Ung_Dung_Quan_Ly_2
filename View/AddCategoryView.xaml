@@ -33,7 +33,7 @@
                             Background="{StaticResource panelBlue40Color}" 
                             CornerRadius="15">
                         <TextBox x:Name="serverTextBox" 
-                                 Text="" 
+                                 Text="{Binding DisplayID}" 
                                  TextWrapping="Wrap"
                                  d:Text="P-1"
                                  Background="Transparent"
@@ -57,7 +57,7 @@
                             Background="{StaticResource panelBlue40Color}" 
                             CornerRadius="15">
                         <TextBox x:Name="databaseTextBox" 
-                                 Text="" 
+                                 Text="{Binding CategoryName}" 
                                  d:Text="Category Name"
                                  TextWrapping="Wrap"
                                  Background="Transparent"
@@ -72,7 +72,7 @@
                              HorizontalAlignment="Center"
                              Margin="0,20,0,0">
 
-                    <Label Content="Desscription"
+                    <Label Content="Description"
                            VerticalAlignment="Center"
                            Width="120"
                            Margin="0,0,20,0"
@@ -82,7 +82,7 @@
                             Background="{StaticResource panelBlue40Color}" 
                             CornerRadius="15">
                         <TextBox x:Name="descriptionTextBox" 
-                                 Text="" 
+                                 Text="{Binding CategoryDescription}" 
                                  d:Text="Description"
                                  VerticalScrollBarVisibility="Visible"
                                  AcceptsReturn="True"

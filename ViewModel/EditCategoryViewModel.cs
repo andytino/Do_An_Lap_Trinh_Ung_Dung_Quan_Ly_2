@@ -18,7 +18,7 @@ using System.Windows.Media.Imaging;
 
 namespace PosApp.ViewModel
 {
-    public class AddCategoryViewModel : ViewModelBase
+    public class EditCategoryViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
@@ -87,30 +87,25 @@ namespace PosApp.ViewModel
 
         public ICommand UploadCommand { get; }
 
-        public AddCategoryViewModel(NavigationStore navigationStore,
+        public EditCategoryViewModel(Category category, 
+            NavigationStore navigationStore,
             ModalNavigationStore modalNavigationStore,
             GlobalStore globalStore,
             Func<NavigationBarViewModel> CreateNavigationBarViewModel)
         {
+            DisplayID = category.DisplayID;
+            CategoryName = category.CategoryName;
+            CategoryDescription = category.Description;
+            CategoryImageUrl = category.ImageUrl;
+
             _navigationStore = navigationStore;
             _modalNavigationStore = modalNavigationStore;
             _globalStore = globalStore;
 
             var closeService = new CloseModalNavigationService(_modalNavigationStore);
-
-            CompositeNavigationService navigationService = new CompositeNavigationService(
-                closeService,
-               new MainLayoutNavigationService<CategoriesViewModel>(
-                _navigationStore,
-                () => new CategoriesViewModel(_navigationStore, _modalNavigationStore, _globalStore, CreateNavigationBarViewModel),
-                CreateNavigationBarViewModel
-                )
-             ); 
-
-            SaveCommand = new AddCategoryCommand(this, navigationService, globalStore);
             CancelCommand = new CloseModalCommand(closeService);
-
             UploadCommand = new ViewModelCommand(ExecuteUploadCommand, CanExecuteUploadCommand);
+
         }
 
         private void ExecuteUploadCommand(object parameter)

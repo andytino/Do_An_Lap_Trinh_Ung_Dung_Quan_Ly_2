@@ -17,6 +17,7 @@ namespace PosApp.ViewModel
     public class LoginViewModel : ViewModelBase
     {
         private ServerSettingStore _serverSettingStore;
+        private GlobalStore _globalStore;
 
         private string _username;
         private string _password;
@@ -60,12 +61,15 @@ namespace PosApp.ViewModel
         public ICommand LoginCommand { get; }
         public ICommand LoadedLoginCommand { get; }
 
-        public LoginViewModel(ServerSettingStore serverSettingStore,
+        public LoginViewModel(GlobalStore globalStore,
+            ServerSettingStore serverSettingStore,
             Func<NavigationBarViewModel> createNavigationBarViewModel,
             INavigationService dashboardNavigationService,
             INavigationService serverSettingNavigationService)
         {
             LoadAccountStorage();
+
+            _globalStore = globalStore;
 
             _serverSettingStore = serverSettingStore;
 
@@ -73,7 +77,7 @@ namespace PosApp.ViewModel
 
             NavigateServerSettingCommand = new NavigateCommand(serverSettingNavigationService);
 
-            LoginCommand = new LoginCommand(this, _serverSettingStore, dashboardNavigationService);
+            LoginCommand = new LoginCommand(this, _globalStore, _serverSettingStore, dashboardNavigationService);
 
         }
 

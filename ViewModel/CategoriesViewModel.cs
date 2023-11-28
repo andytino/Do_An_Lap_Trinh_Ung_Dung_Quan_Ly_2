@@ -9,16 +9,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using PosApp.ViewModel.Command;
+using System.Windows;
+using Microsoft.Data.SqlClient;
+using System.ComponentModel;
+using System.Data.Common;
 
 namespace PosApp.ViewModel
 {
     public class CategoriesViewModel : ViewModelBase
     {
         private ObservableCollection<Category> _dataList;
+        private ObservableCollection<bool> _isOpenModal;
+        private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
-        private readonly Func<AddCategoryViewModel> _createAddCategoryViewModel;
-        private readonly Func<NavigationBarViewModel> _createNavigationBarViewModel;
+        private readonly GlobalStore _globalStore;
 
+        public ObservableCollection<bool> IsOpenModal
+        {
+            get { return _isOpenModal; }
+            set
+            {
+                _isOpenModal = value;
+                OnPropertyChanged(nameof(IsOpenModal));
+            }
+        }
         public ObservableCollection<Category> DataList
         {
             get { return _dataList; }
@@ -34,34 +48,87 @@ namespace PosApp.ViewModel
         public NavigationBarViewModel NavigationBarViewModel { get; }
 
         public ICommand AddCategoryCommand { get; }
+        public ICommand DeleteCategoryCommand { get; }
+        public ICommand EditCategoryCommand { get; }
 
-        public CategoriesViewModel(ModalNavigationStore modalNavigationStore)
+        public CategoriesViewModel(NavigationStore navigationStore,
+            ModalNavigationStore modalNavigationStore,
+            GlobalStore globalStore,
+            Func<NavigationBarViewModel> CreateNavigationBarViewModel)
         {
+            _navigationStore = navigationStore;
             _modalNavigationStore = modalNavigationStore;
+            _globalStore = globalStore;
 
             DataList = new ObservableCollection<Category>();
-            DataList.Add(new Category
-            {
-                DisplayID = "1",
-                CategoryName = "name 1",
-                Description = "Day la description",
-                ImageUrl = "/Assets/Images/laptop.png"
-            });
-
-            DataList.Add(new Category
-            {
-                DisplayID = "2",
-                CategoryName = "name 2",
-                Description = "Day la description",
-                ImageUrl = "/Assets/Images/smartwatch.png"
-            });
 
             var addCategoryModalNavigationService =
                 new ModalNavigationService<AddCategoryViewModel>(
-                    _modalNavigationStore,
-                    () => new AddCategoryViewModel(_modalNavigationStore));
+                        _modalNavigationStore,
+                        () => new AddCategoryViewModel(_navigationStore,
+                        _modalNavigationStore,
+                        _globalStore,
+                        CreateNavigationBarViewModel)
+                    );
+
+            var mainLayoutNavigationService = new MainLayoutNavigationService<CategoriesViewModel>(
+                    _navigationStore,
+                    () => new CategoriesViewModel(_navigationStore, _modalNavigationStore, _globalStore, CreateNavigationBarViewModel),
+                    CreateNavigationBarViewModel
+                );
+
+            var editCategoryModalNavigationService =
+                new ModalParameterNavigationService<Category, EditCategoryViewModel>(
+                _modalNavigationStore,
+                (parameter) => new EditCategoryViewModel(parameter,
+                        _navigationStore,
+                        _modalNavigationStore,
+                        _globalStore,
+                        CreateNavigationBarViewModel)
+                    );
 
             AddCategoryCommand = new OpenModalCommand(addCategoryModalNavigationService);
+            EditCategoryCommand = new OpenUpdateCategoryModalCommand(editCategoryModalNavigationService, _globalStore);
+            DeleteCategoryCommand = new DeleteCategoryCommand(mainLayoutNavigationService, _globalStore);
+
+            LoadCategories();
+
+        }
+
+        private void LoadCategories()
+        {
+            string sql = """
+                        SELECT * 
+                        FROM Categories
+                        JOIN Images ON Categories.ImageID = Images.ImageID
+                        WHERE DeletedAt IS NULL;
+                """;
+
+            var connection = _globalStore.CurrentGlobal.Connection;
+            if (connection != null)
+            {
+                var command = new SqlCommand(sql, connection);
+                var reader = command.ExecuteReader();
+                var _dataList = new ObservableCollection<Category>();
+
+                while (reader.Read())
+                {
+                    Category category = new Category()
+                    {
+                        CategoryID = (string)reader["CategoryID"],
+                        CategoryName = (string)reader["CategoryName"],
+                        Description = (string)reader["Description"],
+                        ImageUrl = (string)reader["ImagePath"]
+                    };
+
+                    _dataList.Add(category);
+
+                }
+
+                reader.Close();
+
+                DataList = _dataList;
+            }
         }
     }
 }

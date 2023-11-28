@@ -8,6 +8,7 @@ namespace PosApp.Model
 {
     public class Category
     {
+        public string CategoryID { get; set; }
         public string? DisplayID { get; set; }
         public string? CategoryName { get; set; }
         public string? Description { get; set; }

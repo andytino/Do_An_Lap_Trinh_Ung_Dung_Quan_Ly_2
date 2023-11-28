@@ -16,8 +16,8 @@
         <Border BorderBrush="{StaticResource panelBlue100Color}" BorderThickness="4" Margin="5" CornerRadius="20" Padding="10">
             <StackPanel>
                 <Image RenderOptions.BitmapScalingMode="HighQuality" 
-                       Source="{Binding ImageUrl, Converter={StaticResource absoluteConverter}}" 
-                       d:Source="/Assets/Images/laptop.png" 
+                       Source="{Binding ImageUrl}" 
+                       d:Source="/Assets/Images/Categories/product.png" 
                        Width="130" Height="130"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
@@ -32,8 +32,18 @@
                     VerticalAlignment="Center"/>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-                    <Image Source="/Assets/Icons/edit.png" Width="25" Height="25" Margin="0,0,10,0" Cursor="Hand"/>
-                    <Image Source="/Assets/Icons/trash.png" Width="25" Height="25" Cursor="Hand"/>
+                    <Button Command="{Binding DataContext.EditCategoryCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding CategoryID}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/edit.png" Width="15" Height="15" Margin="0,0,5,0"/>
+                        </StackPanel>
+                    </Button>
+                    <!--<Image Source="/Assets/Icons/edit.png" Width="25" Height="25" Margin="0,0,10,0" Cursor="Hand"/>-->
+                    <!--<Image Source="/Assets/Icons/trash.png" Width="25" Height="25" Cursor="Hand" Comman"/>-->
+                    <Button Command="{Binding DataContext.DeleteCategoryCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding CategoryID}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/trash.png" Width="15" Height="15" Margin="0,0,5,0"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </StackPanel>
         </Border>
