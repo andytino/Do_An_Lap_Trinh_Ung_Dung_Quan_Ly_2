@@ -13,44 +13,17 @@ namespace PosApp.ViewModel.Command
 {
     public class OpenUpdateCategoryModalCommand : CommandBase
     {
-        private readonly IParameterNavigationService<Category> _navigationService;
-        private SqlConnection _connection;
+        private readonly IParameterNavigationService<string> _navigationService;
 
-        public OpenUpdateCategoryModalCommand(IParameterNavigationService<Category> navigationService, GlobalStore globalStore)
+        public OpenUpdateCategoryModalCommand(IParameterNavigationService<string> navigationService)
         {
             _navigationService = navigationService;
-            _connection = globalStore.CurrentGlobal.Connection;
         }
 
         public override void Execute(object parameter)
         {
-            string getCategorySql = $"""
-                        SELECT *
-                        FROM Categories
-                        JOIN Images ON Categories.ImageID = Images.ImageID
-                        WHERE CategoryID = '{parameter}'
-                """;
-            
-            if(_connection != null)
-            {
-                var getCategoryCommand = new SqlCommand(getCategorySql, _connection);
-                var reader = getCategoryCommand.ExecuteReader();
-                if (reader.Read())
-                {
-                    Category category = new Category()
-                    {
-                        CategoryID = (string)reader["CategoryID"],
-                        CategoryName = (string)reader["CategoryName"],
-                        Description = (string)reader["Description"],
-                        ImageUrl = (string)reader["ImagePath"]
-
-                    };
-
-                    _navigationService.Navigate(category);
-                }
-
-                reader.Close();
-            }
+            var id = parameter as string;
+            _navigationService.Navigate(id);
         }
     }
 }

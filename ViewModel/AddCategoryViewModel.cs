@@ -1,4 +1,6 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Win32;
 using PosApp.Model;
 using PosApp.Services;
 using PosApp.Stores;
@@ -23,22 +25,11 @@ namespace PosApp.ViewModel
         private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly GlobalStore _globalStore;
-        private readonly Category _category;
-        private string _displayID;
+        
         private string _categoryName;
         private string _categoryDescription;
         private string _categoryImageUrl;
         private ImageSource _categoryImageSource;
-
-        public string DisplayID
-        {
-            get { return _displayID; }
-            set
-            {
-                _displayID = value;
-                OnPropertyChanged(nameof(DisplayID));
-            }
-        }
 
         public string CategoryName
         {
@@ -87,7 +78,7 @@ namespace PosApp.ViewModel
 
         public ICommand UploadCommand { get; }
 
-        public AddCategoryViewModel(NavigationStore navigationStore,
+        public AddCategoryViewModel(string categoryId, NavigationStore navigationStore,
             ModalNavigationStore modalNavigationStore,
             GlobalStore globalStore,
             Func<NavigationBarViewModel> CreateNavigationBarViewModel)
@@ -105,9 +96,14 @@ namespace PosApp.ViewModel
                 () => new CategoriesViewModel(_navigationStore, _modalNavigationStore, _globalStore, CreateNavigationBarViewModel),
                 CreateNavigationBarViewModel
                 )
-             ); 
+             );
 
-            SaveCommand = new AddCategoryCommand(this, navigationService, globalStore);
+            if (!categoryId.IsNullOrEmpty())
+            {
+                LoadCategory(categoryId);
+            }
+
+            SaveCommand = new SaveCategoryCommand(this, navigationService, globalStore);
             CancelCommand = new CloseModalCommand(closeService);
 
             UploadCommand = new ViewModelCommand(ExecuteUploadCommand, CanExecuteUploadCommand);
@@ -131,6 +127,35 @@ namespace PosApp.ViewModel
         private bool CanExecuteUploadCommand(object parameter)
         {
             return true;
+        }
+
+
+        private void LoadCategory(string catergoryId)
+        {
+            string getCategorySql = $"""
+                        SELECT *
+                        FROM Categories
+                        JOIN Images ON Categories.ImageID = Images.ImageID
+                        WHERE CategoryID = '{catergoryId}'
+                """
+            ;
+            var connection = _globalStore._currentGlobal.Connection;
+
+            if (connection != null)
+            {
+                var getCategoryCommand = new SqlCommand(getCategorySql, connection);
+                var reader = getCategoryCommand.ExecuteReader();
+                if (reader.Read())
+                {
+
+                    CategoryName = (string)reader["CategoryName"];
+                    CategoryDescription = (string)reader["Description"];
+                    CategoryImageUrl = (string)reader["ImagePath"];
+
+                }
+
+                reader.Close();
+            }
         }
     }
 }

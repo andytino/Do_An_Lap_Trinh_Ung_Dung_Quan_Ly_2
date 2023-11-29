@@ -62,10 +62,11 @@ namespace PosApp.ViewModel
 
             DataList = new ObservableCollection<Category>();
 
+            var newCategoryId = "";
             var addCategoryModalNavigationService =
                 new ModalNavigationService<AddCategoryViewModel>(
                         _modalNavigationStore,
-                        () => new AddCategoryViewModel(_navigationStore,
+                        () => new AddCategoryViewModel(newCategoryId,_navigationStore,
                         _modalNavigationStore,
                         _globalStore,
                         CreateNavigationBarViewModel)
@@ -78,9 +79,9 @@ namespace PosApp.ViewModel
                 );
 
             var editCategoryModalNavigationService =
-                new ModalParameterNavigationService<Category, EditCategoryViewModel>(
+                new ModalParameterNavigationService<string, AddCategoryViewModel>(
                 _modalNavigationStore,
-                (parameter) => new EditCategoryViewModel(parameter,
+                (parameter) => new AddCategoryViewModel(parameter,
                         _navigationStore,
                         _modalNavigationStore,
                         _globalStore,
@@ -88,7 +89,7 @@ namespace PosApp.ViewModel
                     );
 
             AddCategoryCommand = new OpenModalCommand(addCategoryModalNavigationService);
-            EditCategoryCommand = new OpenUpdateCategoryModalCommand(editCategoryModalNavigationService, _globalStore);
+            EditCategoryCommand = new OpenUpdateCategoryModalCommand(editCategoryModalNavigationService);
             DeleteCategoryCommand = new DeleteCategoryCommand(mainLayoutNavigationService, _globalStore);
 
             LoadCategories();

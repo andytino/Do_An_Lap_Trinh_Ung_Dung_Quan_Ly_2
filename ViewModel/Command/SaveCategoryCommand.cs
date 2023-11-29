@@ -16,14 +16,14 @@ using System.Windows;
 
 namespace PosApp.ViewModel.Command
 {
-    public class AddCategoryCommand : CommandBase
+    public class SaveCategoryCommand : CommandBase
     {
         private readonly AddCategoryViewModel _addCategoryViewModel;
         private readonly GlobalStore _globalStore;
         private readonly INavigationService _navigationService;
         private SqlConnection _connection;
 
-        public AddCategoryCommand(AddCategoryViewModel addCategoryViewModel,
+        public SaveCategoryCommand(AddCategoryViewModel addCategoryViewModel,
             INavigationService navigationService,
             GlobalStore globalStore)
         {
@@ -48,8 +48,8 @@ namespace PosApp.ViewModel.Command
             insertImageCommand.Parameters.Add("@ImagePath", System.Data.SqlDbType.NVarChar, int.MaxValue).Value = destinationFolder;
 
             string sql = """
-                        INSERT INTO Categories (CategoryID, DisplayID, CategoryName, Description, ImageID)
-                        VALUES (@CategoryID, @DisplayID, @CategoryName, @Description, @ImageID);
+                        INSERT INTO Categories (CategoryID, CategoryName, Description, ImageID)
+                        VALUES (@CategoryID, @CategoryName, @Description, @ImageID);
                     """;
 
             int imageRows = insertImageCommand.ExecuteNonQuery();
@@ -60,7 +60,6 @@ namespace PosApp.ViewModel.Command
 
                 var command = new SqlCommand(sql, _connection);
                 command.Parameters.Add("@CategoryID", System.Data.SqlDbType.VarChar, 50).Value = guidCategory;
-                command.Parameters.Add("@DisplayID", System.Data.SqlDbType.VarChar, 50).Value = _addCategoryViewModel.DisplayID;
                 command.Parameters.Add("@CategoryName", System.Data.SqlDbType.NVarChar, 100).Value = _addCategoryViewModel.CategoryName;
                 command.Parameters.Add("@Description", System.Data.SqlDbType.NVarChar, 200).Value = _addCategoryViewModel.CategoryDescription;
                 command.Parameters.Add("@ImageID", System.Data.SqlDbType.VarChar, 50).Value = guidImageUrl;
