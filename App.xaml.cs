@@ -86,7 +86,7 @@ namespace PosApp
         {
             return new MainLayoutNavigationService<ProductsViewModel>(
                 _navigationStore,
-                () => new ProductsViewModel(),
+                () => new ProductsViewModel(_navigationStore, _modalNavigationStore, _globalStore, CreateNavigationBarViewModel),
                 CreateNavigationBarViewModel
                 );
         }
@@ -95,7 +95,7 @@ namespace PosApp
         {
             return new MainLayoutNavigationService<PurchasesViewModel>(
                 _navigationStore,
-                () => new PurchasesViewModel(),
+                () => new PurchasesViewModel(_navigationStore, _modalNavigationStore, _globalStore, CreateNavigationBarViewModel),
                 CreateNavigationBarViewModel
                 );
         }

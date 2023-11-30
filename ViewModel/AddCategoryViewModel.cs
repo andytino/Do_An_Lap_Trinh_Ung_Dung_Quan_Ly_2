@@ -98,14 +98,13 @@ namespace PosApp.ViewModel
                 )
              );
 
-            if (!categoryId.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(categoryId))
             {
                 LoadCategory(categoryId);
             }
 
             SaveCommand = new SaveCategoryCommand(this, navigationService, globalStore);
             CancelCommand = new CloseModalCommand(closeService);
-
             UploadCommand = new ViewModelCommand(ExecuteUploadCommand, CanExecuteUploadCommand);
         }
 
@@ -151,7 +150,7 @@ namespace PosApp.ViewModel
                     CategoryName = (string)reader["CategoryName"];
                     CategoryDescription = (string)reader["Description"];
                     CategoryImageUrl = (string)reader["ImagePath"];
-
+                    CategoryImageSource = new BitmapImage(new Uri(CategoryImageUrl));
                 }
 
                 reader.Close();

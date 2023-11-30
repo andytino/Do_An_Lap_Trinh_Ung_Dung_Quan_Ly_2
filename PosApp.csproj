@@ -52,4 +52,14 @@
     <Resource Include="Assets\Images\Categories\product.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="View\ProductFormView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Images\Products\" />
+  </ItemGroup>
+
 </Project>

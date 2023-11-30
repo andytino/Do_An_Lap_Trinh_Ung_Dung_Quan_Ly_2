@@ -1,16 +1,24 @@
 ﻿using PosApp.Model;
+using PosApp.Services;
+using PosApp.Stores;
+using PosApp.ViewModel.Command;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PosApp.ViewModel
 {
     public class PurchasesViewModel : ViewModelBase
     {
         private ObservableCollection<Purchase> _dataList;
+        private ObservableCollection<bool> _isOpenModal;
+        private readonly NavigationStore _navigationStore;
+        private readonly ModalNavigationStore _modalNavigationStore;
+        private readonly GlobalStore _globalStore;
 
         public ObservableCollection<Purchase> DataList
         {
@@ -26,26 +34,33 @@ namespace PosApp.ViewModel
         }
         public NavigationBarViewModel NavigationBarViewModel { get; }
 
-        public PurchasesViewModel()
-        {
-            DataList = new ObservableCollection<Purchase>();
-            DataList.Add(new Purchase
-            {
-                DisplayID = "1",
-                SupplierName = "Test 1",
-                Date = "10/10/2020",
-                Total = "20",
-                Description = "Day la description"
-            });
+        public ICommand AddPurchaseCommand { get; }
+        public ICommand DeletePurchaseCommand { get; }
+        public ICommand EditPurchaseCommand { get; }
 
-            DataList.Add(new Purchase
-            {
-                DisplayID = "2",
-                SupplierName = "Test 2",
-                Date = "10/10/2023",
-                Total = "30",
-                Description = "Day la description  2"
-            });
+        public PurchasesViewModel(NavigationStore navigationStore,
+            ModalNavigationStore modalNavigationStore,
+            GlobalStore globalStore,
+            Func<NavigationBarViewModel> CreateNavigationBarViewModel)
+        {
+            _navigationStore = navigationStore;
+            _modalNavigationStore = modalNavigationStore;
+            _globalStore = globalStore;
+
+            DataList = new ObservableCollection<Purchase>();
+
+            var newPurchaseId = "";
+
+            var addPurchaseModalNavigationService =
+                new ModalNavigationService<PurchaseFormViewModel>(
+                        _modalNavigationStore,
+                        () => new PurchaseFormViewModel(newPurchaseId, _navigationStore,
+                        _modalNavigationStore,
+                        _globalStore,
+                        CreateNavigationBarViewModel)
+                    );
+
+            AddPurchaseCommand = new OpenModalCommand(addPurchaseModalNavigationService);
         }
     }
 }

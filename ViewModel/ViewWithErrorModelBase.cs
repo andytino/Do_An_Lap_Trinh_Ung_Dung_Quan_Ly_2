@@ -9,9 +9,12 @@ using System.Collections;
 
 namespace PosApp.ViewModel
 {
-    public class ViewModelBase : INotifyPropertyChanged, IDisposable
+    public class ViewWithErrorModelBase : INotifyPropertyChanged, INotifyDataErrorInfo, IDisposable
     {
+        public bool HasErrors => throw new NotImplementedException();
+
         public event PropertyChangedEventHandler? PropertyChanged;
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
         public void OnPropertyChanged(string propertyName)
         {
@@ -20,12 +23,9 @@ namespace PosApp.ViewModel
 
         public virtual void Dispose() { }
 
-        public event EventHandler<string> ErrorOccured;
-
-        protected void RaiseError(string errorMessage)
+        public IEnumerable GetErrors(string? propertyName)
         {
-            ErrorOccured?.Invoke(this, errorMessage);
+            throw new NotImplementedException();
         }
-
     }
 }

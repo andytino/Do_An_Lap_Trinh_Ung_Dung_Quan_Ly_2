@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PosApp.Model
 {
-    public class Purchase
+
+    public class Supplier
     {
-        public string? PurchaseID { get; set; }
-        public string? DisplayID { get; set; }
         public string? SupplierID { get; set; }
         public string? SupplierName { get; set; }
-        public string? Date { get; set; }
-        public string? Total { get; set; }
-        public string? Description { get; set; }
     }
 }

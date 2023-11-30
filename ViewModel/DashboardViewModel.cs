@@ -30,29 +30,29 @@ namespace PosApp.ViewModel
         public DashboardViewModel()
         {
             DataList = new ObservableCollection<Product>();
-            DataList.Add(new Product
-            {
-                DisplayID = "1",
-                ProductName = "Test TestTe stTestTest 1",
-                Unit = "cai",
-                Price = "10/10/2020",
-                Quantity = "20",
-                Quality = "1",
-                ImageUrl = "",
-                Description = "Day la description"
-            });
+            //DataList.Add(new Product
+            //{
+            //    DisplayID = "1",
+            //    ProductName = "Test TestTe stTestTest 1",
+            //    Unit = "cai",
+            //    Price = "10/10/2020",
+            //    Quantity = "20",
+            //    Quality = "1",
+            //    ImageUrl = "",
+            //    Description = "Day la description"
+            //});
 
-            DataList.Add(new Product
-            {
-                DisplayID = "2",
-                ProductName = "Test 2",
-                Unit = "cai",
-                Price = "10/10/2020",
-                Quantity = "20",
-                Quality = "1",
-                ImageUrl = "",
-                Description = "Day la description"
-            });
+            //DataList.Add(new Product
+            //{
+            //    DisplayID = "2",
+            //    ProductName = "Test 2",
+            //    Unit = "cai",
+            //    Price = "10/10/2020",
+            //    Quantity = "20",
+            //    Quality = "1",
+            //    ImageUrl = "",
+            //    Description = "Day la description"
+            //});
         }
     }
 }

@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource primaryBtn}" Grid.Column="2"  Command="{Binding AddCategoryCommand}" Width="150">
+            <Button Style="{StaticResource primaryBtn}" Grid.Column="2"  Command="{Binding AddProductCommand}" Width="150">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
                     <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/plus.png" Width="15" Height="15" Margin="0,0,5,0"/>
                     <Label Content="ADD PRODUCT" Background="Transparent" Foreground="White" FontWeight="Bold" BorderThickness="0" Cursor="Hand"/>
@@ -36,7 +36,7 @@
         </Grid>
         
         <Border Grid.Row="3" Padding="20,20,20,100">
-            <DataGrid ItemsSource="{Binding DataList}" AutoGenerateColumns="False">
+            <DataGrid ItemsSource="{Binding Products}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="#" IsReadOnly="True" Width="auto"/>
                     <DataGridTextColumn Header="ID" Binding="{Binding DisplayID}" IsReadOnly="True" Width="50"/>

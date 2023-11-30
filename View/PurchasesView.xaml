@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource primaryBtn}" Grid.Column="2"  Command="{Binding AddCategoryCommand}" Width="150">
+            <Button Style="{StaticResource primaryBtn}" Grid.Column="2"  Command="{Binding AddPurchaseCommand}" Width="150">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
                     <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/Icons/plus.png" Width="15" Height="15" Margin="0,0,5,0"/>
                     <Label Content="ADD PURCHASE" Background="Transparent" Foreground="White" FontWeight="Bold" BorderThickness="0" Cursor="Hand"/>

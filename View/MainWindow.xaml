@@ -43,8 +43,16 @@
                 <views:ProductsView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModels:ProductFormViewModel}">
+                <views:ProductFormView/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type viewModels:PurchasesViewModel}">
                 <views:PurchasesView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModels:PurchaseFormViewModel}">
+                <views:PurchaseFormView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModels:SalesViewModel}">
