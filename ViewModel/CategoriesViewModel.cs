@@ -118,7 +118,7 @@ namespace PosApp.ViewModel
                     {
                         CategoryID = (string)reader["CategoryID"],
                         CategoryName = (string)reader["CategoryName"],
-                        Description = (string)reader["Description"],
+                        Description = reader["Description"] != DBNull.Value ? (string)reader["Description"] : null,
                         ImageUrl = (string)reader["ImagePath"]
                     };
 

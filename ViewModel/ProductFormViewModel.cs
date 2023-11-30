@@ -63,15 +63,10 @@ namespace PosApp.ViewModel
         private string _productName;
         private string _categoryID;
         private string _unitID;
-        //private string _quantity;
-        //private string _price;
         private string _price;
-
-        //private string _quality;
         private string _description;
         private string _productImageUrl;
-        //private string _priceUpdateAt;
-        private ImageSource _productImageSource;
+        private BitmapImage _productImageSource;
 
         public string ProductID
         {
@@ -120,29 +115,20 @@ namespace PosApp.ViewModel
                 OnPropertyChanged(nameof(UnitID));
             }
         }
-       
-        //public string? PriceErrorMessage
-        //{
-        //    get;
-        //    private set
-        //    {
-        //        if(_)
-        //    }
-        //}
-        //public string Price
+
         public string Price
 
         {
             get => _price;
             set
             {
-                if(_price != value)
+                if (_price != value)
                 {
                     _price = value;
                     OnPropertyChanged(nameof(Price));
                 }
-                
-               
+
+
             }
         }
 
@@ -165,7 +151,7 @@ namespace PosApp.ViewModel
                 OnPropertyChanged(nameof(ProductImageUrl));
             }
         }
-        public ImageSource ProductImageSource
+        public BitmapImage ProductImageSource
         {
             get { return _productImageSource; }
             set
@@ -179,6 +165,7 @@ namespace PosApp.ViewModel
         public ICommand CancelCommand { get; }
 
         public ICommand UploadCommand { get; }
+        public ICommand ValidateCommand { get; }
 
         public ProductFormViewModel(string categoryId,
             NavigationStore navigationStore,
@@ -207,9 +194,15 @@ namespace PosApp.ViewModel
              );
 
             SaveCommand = new SaveProductCommand(this, navigationService, globalStore);
+            ValidateCommand = new ViewModelCommand(SaveCommand.Execute, CanExecuteValidateCommand);
             CancelCommand = new CloseModalCommand(closeService);
 
             UploadCommand = new ViewModelCommand(ExecuteUploadCommand, CanExecuteUploadCommand);
+        }
+
+        private bool CanExecuteValidateCommand(object parameter)
+        {
+            return string.IsNullOrEmpty(Error);
         }
 
         private void ExecuteUploadCommand(object parameter)
@@ -232,7 +225,7 @@ namespace PosApp.ViewModel
             return true;
         }
 
-        
+
 
         private void LoadCategories()
         {
@@ -303,15 +296,53 @@ namespace PosApp.ViewModel
             {
                 if (columnName == nameof(Price))
                 {
-
                     return ValidationHelper.ValidateCurrency("Price", Price);
+                }
+
+                if (columnName == nameof(DisplayID))
+                {
+                    return ValidationHelper.ValidateNotEmpty("Display ID", false, DisplayID);
+                }
+
+                if (columnName == nameof(ProductName))
+                {
+                    return ValidationHelper.ValidateNotEmpty("Product Name", false, ProductName);
+                }
+
+                if (columnName == nameof(CategoryID))
+                {
+                    return ValidationHelper.ValidateNotEmpty("Category ID", false, CategoryID);
+                }
+
+                if (columnName == nameof(UnitID))
+                {
+                    return ValidationHelper.ValidateNotEmpty("Unit ID", false, UnitID);
+                }
+
+                if (columnName == nameof(ProductImageSource))
+                {
+                    return ValidationHelper.ValidateImage(ProductImageSource);
                 }
 
                 return null;
             }
         }
 
-        // Implement IDataErrorInfo
-        public string? Error => null;
+        public string? Error
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(this[nameof(DisplayID)]) || 
+                    !string.IsNullOrEmpty(this[nameof(Price)]) ||
+                    !string.IsNullOrEmpty(this[nameof(ProductName)]) ||
+                    !string.IsNullOrEmpty(this[nameof(CategoryID)]) ||
+                    !string.IsNullOrEmpty(this[nameof(UnitID)]) ||
+                    !string.IsNullOrEmpty(this[nameof(ProductImageSource)]))
+                {
+                    return "Error";
+                }
+                return null;
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Win32;
+using PosApp.Helper;
 using PosApp.Model;
 using PosApp.Services;
 using PosApp.Stores;
@@ -8,6 +9,7 @@ using PosApp.ViewModel.Command;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -20,7 +22,7 @@ using System.Windows.Media.Imaging;
 
 namespace PosApp.ViewModel
 {
-    public class AddCategoryViewModel : ViewModelBase
+    public class AddCategoryViewModel : ViewModelBase, IDataErrorInfo
     {
         private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
@@ -29,7 +31,7 @@ namespace PosApp.ViewModel
         private string _categoryName;
         private string _categoryDescription;
         private string _categoryImageUrl;
-        private ImageSource _categoryImageSource;
+        private BitmapImage _categoryImageSource;
 
         public string CategoryName
         {
@@ -61,7 +63,7 @@ namespace PosApp.ViewModel
             }
         }
 
-        public ImageSource CategoryImageSource
+        public BitmapImage CategoryImageSource
         {
             get { return _categoryImageSource; }
             set
@@ -75,6 +77,8 @@ namespace PosApp.ViewModel
 
         public ICommand SaveCommand { get; }
         public ICommand CancelCommand { get; }
+
+        public ICommand ValidateCommand { get; }
 
         public ICommand UploadCommand { get; }
 
@@ -104,8 +108,15 @@ namespace PosApp.ViewModel
             }
 
             SaveCommand = new SaveCategoryCommand(this, navigationService, globalStore);
+            ValidateCommand = new ViewModelCommand(SaveCommand.Execute, CanExecuteValidateCommand);
+
             CancelCommand = new CloseModalCommand(closeService);
             UploadCommand = new ViewModelCommand(ExecuteUploadCommand, CanExecuteUploadCommand);
+        }
+
+        private bool CanExecuteValidateCommand(object parameter)
+        {
+            return string.IsNullOrEmpty(Error);
         }
 
         private void ExecuteUploadCommand(object parameter)
@@ -154,6 +165,38 @@ namespace PosApp.ViewModel
                 }
 
                 reader.Close();
+            }
+        }
+
+        public string? this[string columnName]
+        {
+            get
+            {
+                if (columnName == nameof(CategoryName))
+                {
+                    return ValidationHelper.ValidateNotEmpty("Price",false, CategoryName);
+                }
+
+                if (columnName == nameof(CategoryImageSource))
+                {
+                    return ValidationHelper.ValidateImage(CategoryImageSource);
+                }
+
+
+                return null;
+            }
+        }
+
+        public string? Error
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(this[nameof(CategoryName)]) ||
+                    !string.IsNullOrEmpty(this[nameof(CategoryImageSource)]))
+                {
+                    return "Error";
+                }
+                return null;
             }
         }
     }

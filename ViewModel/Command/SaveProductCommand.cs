@@ -49,16 +49,18 @@ namespace PosApp.ViewModel.Command
             int imageRows = insertImageCommand.ExecuteNonQuery();
 
             string insertSql = """
-                        INSERT INTO Products (ProductID, ProductName, CategoryID, ImageID, UnitID, Price, Quantity, Quality, Description)
-                        VALUES (@ProductID, @ProductName, @CategoryID, @ImageID, @UnitID, @Price, @Quantity, @Quality, @Description)
+                        INSERT INTO Products (ProductID, DisplayID, ProductName, CategoryID, ImageID, UnitID, Price, Quantity, Quality, Description, CreatedAt, UpdatedAt)
+                        VALUES (@ProductID, @DisplayID, @ProductName, @CategoryID, @ImageID, @UnitID, @Price, @Quantity, @Quality, @Description, @CreatedAt, @UpdatedAt)
                     """;
 
             if (imageRows > 0)
             {
+                DateTime currentDateTime = DateTime.Now;
                 var guidProductID = Guid.NewGuid().ToString();
 
                 var command = new SqlCommand(insertSql, _connection);
                 command.Parameters.Add("@ProductID", System.Data.SqlDbType.VarChar, 50).Value = guidProductID;
+                command.Parameters.Add("@DisplayID", System.Data.SqlDbType.VarChar, 50).Value = _productFormViewModel.DisplayID;
                 command.Parameters.Add("@ProductName", System.Data.SqlDbType.NVarChar, 100).Value = _productFormViewModel.ProductName;
                 command.Parameters.Add("@CategoryID", System.Data.SqlDbType.VarChar, 50).Value = _productFormViewModel.CategoryID;
                 command.Parameters.Add("@ImageID", System.Data.SqlDbType.VarChar, 50).Value = guidImageUrl;
@@ -66,7 +68,9 @@ namespace PosApp.ViewModel.Command
                 command.Parameters.Add("@Price", System.Data.SqlDbType.Float).Value = _productFormViewModel.Price;
                 command.Parameters.Add("@Quantity", System.Data.SqlDbType.Int).Value = 0;
                 command.Parameters.Add("@Quality", System.Data.SqlDbType.NVarChar, 50).Value = "Tot";
-                command.Parameters.Add("@Description", System.Data.SqlDbType.NVarChar, 200).Value = _productFormViewModel.Description ?? null;
+                command.Parameters.Add("@Description", System.Data.SqlDbType.NVarChar, 200).Value = !string.IsNullOrEmpty(_productFormViewModel.Description) ? (object)_productFormViewModel.Description : DBNull.Value;
+                command.Parameters.Add("@CreatedAt", System.Data.SqlDbType.DateTime).Value = currentDateTime;
+                command.Parameters.Add("@UpdatedAt", System.Data.SqlDbType.DateTime).Value = currentDateTime;
 
                 int rows = command.ExecuteNonQuery();
 

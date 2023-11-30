@@ -7,6 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800" d:Background="White">
 
+    <UserControl.Resources>
+        <ControlTemplate x:Key="ErrorTemplate">
+            <StackPanel>
+                <AdornedElementPlaceholder x:Name="placeholder"/>
+                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" Margin="0,10,0,0" FontSize="10"/>
+            </StackPanel>
+        </ControlTemplate>
+    </UserControl.Resources>
+    
     <Border Background="white" Padding="10,20,10,20">
         <Border CornerRadius="20"
             BorderThickness="5"
@@ -47,13 +56,14 @@
                                         Background="{StaticResource panelBlue40Color}" 
                                         CornerRadius="15">
                                     <TextBox x:Name="displayIDTextBox" 
-                                             Text="{Binding DisplayID}" 
+                                             Text="{Binding DisplayID, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                              d:Text="DisplayID"
                                              TextWrapping="Wrap"
                                              Background="Transparent"
                                              BorderThickness="0"
                                              Padding="5"
-                                             Width="200"/>
+                                             Width="200" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+                                    </TextBox>
                                 </Border>
                             </StackPanel>
 
@@ -69,13 +79,14 @@
                                         Background="{StaticResource panelBlue40Color}" 
                                         CornerRadius="15">
                                     <TextBox x:Name="productNameTextBox" 
-                                             Text="{Binding ProductName}" 
+                                             Text="{Binding ProductName,  UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                              d:Text="Product name"
                                              TextWrapping="Wrap"
                                              Background="Transparent"
                                              BorderThickness="0"
                                              Padding="5"
-                                             Width="200"/>
+                                             Width="200" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+                                    </TextBox>
                                 </Border>
                             </StackPanel>
 
@@ -91,10 +102,10 @@
                                         Background="{StaticResource panelBlue40Color}" 
                                         CornerRadius="15">
                                     <ComboBox ItemsSource="{Binding Categories}"  
-                                              SelectedValue="{Binding CategoryID, Mode=TwoWay}"  
+                                              SelectedValue="{Binding CategoryID, Mode=TwoWay, ValidatesOnDataErrors=True}"  
                                               DisplayMemberPath="CategoryName" 
                                               SelectedValuePath="CategoryID" 
-                                              BorderThickness="0" Background="Transparent"  Width="200"/>
+                                              BorderThickness="0" Background="Transparent"  Width="200" Validation.ErrorTemplate="{StaticResource ErrorTemplate}"/>
 
                                 </Border>
                             </StackPanel>
@@ -161,15 +172,8 @@
                                              Background="Transparent"
                                              BorderThickness="0"
                                              Padding="5"
-                                             Width="200">
-                                        <Validation.ErrorTemplate>
-                                            <ControlTemplate>
-                                                <StackPanel>
-                                                    <AdornedElementPlaceholder x:Name="placeholder"/>
-                                                    <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"/>
-                                                </StackPanel>
-                                            </ControlTemplate>
-                                        </Validation.ErrorTemplate>
+                                             Width="200" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+                                       
                                     </TextBox>
                                 </Border>
                             </StackPanel>
@@ -188,10 +192,11 @@
                                         Background="{StaticResource panelBlue40Color}" 
                                         CornerRadius="15">
                                     <ComboBox ItemsSource="{Binding Units}"  
-                                              SelectedValue="{Binding UnitID, Mode=TwoWay}"  
+                                              SelectedValue="{Binding UnitID, Mode=TwoWay, ValidatesOnDataErrors=True}"  
                                               DisplayMemberPath="UnitName" 
                                               SelectedValuePath="UnitID" 
-                                              BorderThickness="0" Background="Transparent"  Width="200"/>
+                                              BorderThickness="0" Background="Transparent"  Width="200"
+                                              Validation.ErrorTemplate="{StaticResource ErrorTemplate}"/>
 
                                 </Border>
                             </StackPanel>
@@ -224,7 +229,7 @@
                     <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
                             <Button Style="{StaticResource primaryBtn}"
-                                    Command="{Binding SaveCommand}"
+                                    Command="{Binding ValidateCommand}"
                                     Content="Save" 
                                     VerticalAlignment="Center" 
                                     Margin="0,0,20,0" Width="100"/>

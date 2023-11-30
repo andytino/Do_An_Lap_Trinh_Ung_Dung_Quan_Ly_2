@@ -61,7 +61,7 @@ namespace PosApp.ViewModel.Command
                 var command = new SqlCommand(sql, _connection);
                 command.Parameters.Add("@CategoryID", System.Data.SqlDbType.VarChar, 50).Value = guidCategory;
                 command.Parameters.Add("@CategoryName", System.Data.SqlDbType.NVarChar, 100).Value = _addCategoryViewModel.CategoryName;
-                command.Parameters.Add("@Description", System.Data.SqlDbType.NVarChar, 200).Value = _addCategoryViewModel.CategoryDescription;
+                command.Parameters.Add("@Description", System.Data.SqlDbType.NVarChar, 200).Value = !string.IsNullOrEmpty(_addCategoryViewModel.CategoryDescription) ? (object)_addCategoryViewModel.CategoryDescription : DBNull.Value;
                 command.Parameters.Add("@ImageID", System.Data.SqlDbType.VarChar, 50).Value = guidImageUrl;
 
                 int rows = command.ExecuteNonQuery();

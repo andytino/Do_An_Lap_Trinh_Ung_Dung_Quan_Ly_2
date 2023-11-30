@@ -40,9 +40,20 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="#" IsReadOnly="True" Width="auto"/>
                     <DataGridTextColumn Header="ID" Binding="{Binding DisplayID}" IsReadOnly="True" Width="50"/>
+                    <DataGridTemplateColumn Header="Image" Width="90">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Image Width="50" Height="auto" MaxHeight="80" 
+                                           Source="{Binding ImageUrl}" 
+                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" IsReadOnly="True" Width="*"/>
                     <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" IsReadOnly="True" Width="*"/>
-                    <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" IsReadOnly="True" Width="*"/>
+                    <DataGridTextColumn Header="Unit" Binding="{Binding UnitName}" IsReadOnly="True" Width="*"/>
                     <DataGridTextColumn Header="Price" Binding="{Binding Price}" IsReadOnly="True" Width="*"/>
                     <DataGridTextColumn Header="Price" Binding="{Binding Quality}" IsReadOnly="True" Width="*"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" IsReadOnly="True" Width="*"/>

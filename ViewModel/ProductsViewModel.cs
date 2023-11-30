@@ -21,7 +21,7 @@ namespace PosApp.ViewModel
         private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly GlobalStore _globalStore;
-        
+
         public ObservableCollection<bool> IsOpenModal
         {
             get { return _isOpenModal; }
@@ -81,7 +81,10 @@ namespace PosApp.ViewModel
         {
             string sql = """
                         SELECT * 
-                        FROM Products;
+                        FROM Products
+                        JOIN Images ON Products.ImageID = Images.ImageID
+                        JOIN Units ON Products.UnitID = Units.UnitID
+                        WHERE DeletedAt IS NULL;
                 """;
             var connection = _globalStore.CurrentGlobal.Connection;
             if (connection != null)
@@ -96,7 +99,13 @@ namespace PosApp.ViewModel
                     {
                         DisplayID = (string)reader["DisplayID"],
                         ProductID = (string)reader["ProductID"],
-                        ProductName = (string)reader["ProductName"]
+                        ProductName = (string)reader["ProductName"],
+                        Price = Convert.ToDecimal(reader["Price"]),
+                        Quantity = Convert.ToInt16(reader["Quantity"]),
+                        Quality = (string)reader["Quality"],
+                        Description = reader["Description"] != DBNull.Value ? (string)reader["Description"] : null,
+                        ImageUrl = (string)reader["ImagePath"],
+                        UnitName = (string)reader["UnitName"]
                     };
                     _products.Add(product);
                 }

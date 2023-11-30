@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace PosApp.Helper
 {
@@ -18,23 +19,29 @@ namespace PosApp.Helper
             return null;
         }
 
-        public static string? ValidateNotEmpty(string propertyName, string value)
+        public static string? ValidateNotEmpty(string propertyName,bool isShowPropetyName, string value)
         {
             if (string.IsNullOrEmpty(value))
             {
-                return $"{propertyName} is required.";
+                if(isShowPropetyName)
+                {
+                    return $"{propertyName} is required.";
+                } else
+                {
+                    return $"Required.";
+                } 
             }
 
-            return null; // Không có lỗi
+            return null;
         }
 
         public static string? ValidateCurrency(string propertyName, string input)
         {
-            // Sử dụng hàm ValidateDecimal để kiểm tra giá trị decimal
             if (string.IsNullOrEmpty(input))
             {
                 return "Required!";
             }
+
             if (!ValidateDecimal(input))
             {
                 return $"{propertyName} Must be decimal.";
@@ -55,7 +62,7 @@ namespace PosApp.Helper
             }
 
             // Kiểm tra giá trị tiền tệ không được có quá nhiều chữ số thập phân
-            int maxDecimalPlaces = 2; // Số này chỉ là ví dụ, bạn có thể thay đổi tùy theo yêu cầu
+            int maxDecimalPlaces = 2;
             int decimalPlaces = BitConverter.GetBytes(decimal.GetBits(amount)[3])[2];
             if (decimalPlaces > maxDecimalPlaces)
             {
@@ -67,7 +74,6 @@ namespace PosApp.Helper
 
         private static bool ValidateDecimal(string input)
         {
-            // Sử dụng TryParse để kiểm tra giá trị decimal
             if (decimal.TryParse(input, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out decimal result))
             {
                 return true;
@@ -76,6 +82,20 @@ namespace PosApp.Helper
             {
                 return false;
             }
+        }
+
+        public static string ValidateImage(BitmapImage image)
+        {
+            if (!IsValidImage(image))
+            {
+                return "Required Image";
+            }
+            return null;
+        }
+
+        private static bool IsValidImage(BitmapImage image)
+        {
+            return image != null;
         }
     }
 }
