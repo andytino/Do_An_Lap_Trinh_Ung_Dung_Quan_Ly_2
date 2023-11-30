@@ -174,7 +174,7 @@ namespace PosApp.ViewModel
             {
                 if (columnName == nameof(CategoryName))
                 {
-                    return ValidationHelper.ValidateNotEmpty("Price",false, CategoryName);
+                    return ValidationHelper.ValidateNotEmpty("CategoryName", false, CategoryName);
                 }
 
                 if (columnName == nameof(CategoryImageSource))

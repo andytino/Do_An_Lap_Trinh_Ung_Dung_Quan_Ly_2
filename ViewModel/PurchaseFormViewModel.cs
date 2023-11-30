@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Win32;
+using PosApp.Helper;
 using PosApp.Model;
 using PosApp.Services;
 using PosApp.Stores;
@@ -8,6 +9,7 @@ using PosApp.ViewModel.Command;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -20,17 +22,31 @@ using System.Windows.Media.Imaging;
 
 namespace PosApp.ViewModel
 {
-    public class PurchaseFormViewModel : ViewModelBase
+    public class PurchaseFormViewModel : ViewModelBase, IDataErrorInfo
     {
         private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
-        private readonly GlobalStore _globalStore;
+        private GlobalStore _globalStore;
 
         private ObservableCollection<PurchaseDetail> _purchaseDetail;
         private ObservableCollection<Supplier> _suppliers;
         private ObservableCollection<PaymentMethod> _paymentMethods;
-        
-        public ObservableCollection<PurchaseDetail> PurchaseDetailList
+        private ObservableCollection<Category> _categories;
+
+        public ObservableCollection<Category> Categories
+        {
+            get { return _categories; }
+            set
+            {
+                if (_categories != value)
+                {
+                    _categories = value;
+                    OnPropertyChanged(nameof(Categories));
+                }
+            }
+        }
+
+        public ObservableCollection<PurchaseDetail> PurchaseDetails
         {
             get { return _purchaseDetail; }
             set
@@ -38,7 +54,7 @@ namespace PosApp.ViewModel
                 if (_purchaseDetail != value)
                 {
                     _purchaseDetail = value;
-                    OnPropertyChanged(nameof(PurchaseDetailList));
+                    OnPropertyChanged(nameof(PurchaseDetails));
                 }
             }
         }
@@ -77,6 +93,7 @@ namespace PosApp.ViewModel
         private string _total;
         private string _description;
         private int _paymentID;
+        private int _paymentName;
 
         public string PurchaseID
         {
@@ -152,13 +169,24 @@ namespace PosApp.ViewModel
             }
         }
 
+        public int PaymentName
+        {
+            get => _paymentName;
+            set
+            {
+                _paymentName = value;
+                OnPropertyChanged(nameof(PaymentName));
+            }
+        }
+
         public ICommand SaveCommand { get; }
         public ICommand CancelCommand { get; }
         public ICommand AddPurchaseDetailCommand { get; }
         public ICommand RemovePurchaseDetailCommand { get; }
 
+        public ICommand ValidateCommand { get; }
 
-        public PurchaseFormViewModel(string categoryId, 
+        public PurchaseFormViewModel(string categoryId,
             NavigationStore navigationStore,
             ModalNavigationStore modalNavigationStore,
             GlobalStore globalStore,
@@ -170,8 +198,13 @@ namespace PosApp.ViewModel
 
             var closeService = new CloseModalNavigationService(_modalNavigationStore);
 
+            LoadCategories();
             // Set default
-            PurchaseDetailList = new ObservableCollection<PurchaseDetail>();
+            PurchaseDetails = new ObservableCollection<PurchaseDetail>
+            {
+                new PurchaseDetail { Categories = Categories }
+            };
+
             Date = DateTime.Now;
 
             LoadSuppliers();
@@ -191,48 +224,64 @@ namespace PosApp.ViewModel
             //{
             //    LoadCategory(categoryId);
             //}
+            LoadProducts(globalStore);
+
 
             SaveCommand = new SavePurchaseCommand(this, navigationService, globalStore);
+            ValidateCommand = new ViewModelCommand(SaveCommand.Execute, CanExecuteValidateCommand);
+
             CancelCommand = new CloseModalCommand(closeService);
 
             AddPurchaseDetailCommand = new ViewModelCommand(ExecuteAddPurchaseDetailCommand, CanExecuteAddPurchaseDetailCommand);
             RemovePurchaseDetailCommand = new ViewModelCommand(ExecuteRemovePurchaseDetailCommand, CanExecuteRemovePurchaseDetailCommand);
         }
 
+        private bool CanExecuteValidateCommand(object parameter)
+        {
+            return string.IsNullOrEmpty(Error);
+        }
+
         private void ExecuteAddPurchaseDetailCommand(object parameter)
         {
-            PurchaseDetailList.Add(new PurchaseDetail
+            if (CanExecuteAddPurchaseDetailCommand(null))
             {
-                PurchaseDetailID = Guid.NewGuid().ToString(),
-                Quantity = 0
-            });
+                PurchaseDetails.Add(new PurchaseDetail
+                {
+                    PurchaseDetailID = Guid.NewGuid().ToString(),
+                    Categories = Categories
+                });
+
+                foreach (var purchaseDetail in PurchaseDetails)
+                {
+                    purchaseDetail.LoadProducts(_globalStore);
+                }
+            }
         }
 
         private bool CanExecuteAddPurchaseDetailCommand(object parameter)
         {
-            return true;
+            return PurchaseDetails != null && Categories != null;
         }
 
         private void ExecuteRemovePurchaseDetailCommand(object parameter)
         {
             if (parameter is PurchaseDetail purchaseDetailItem)
             {
-                PurchaseDetailList.Remove(purchaseDetailItem);
+                PurchaseDetails.Remove(purchaseDetailItem);
             }
         }
 
         private bool CanExecuteRemovePurchaseDetailCommand(object parameter)
         {
-            return PurchaseDetailList.Count > 1;
+            return PurchaseDetails.Count > 1;
         }
 
         private void SetDefaultPurchaseDetail()
         {
-            PurchaseDetailList.Add(new PurchaseDetail
+            PurchaseDetails = new ObservableCollection<PurchaseDetail>
             {
-                PurchaseDetailID = Guid.NewGuid().ToString(),
-                Quantity = 0
-            });
+                new PurchaseDetail { Categories = Categories }
+            };
         }
 
         private void LoadSuppliers()
@@ -243,7 +292,7 @@ namespace PosApp.ViewModel
                         WHERE DeletedAt IS NULL;
                 """;
             var connection = _globalStore.CurrentGlobal.Connection;
-            if(connection != null )
+            if (connection != null)
             {
                 var command = new SqlCommand(sql, connection);
                 var reader = command.ExecuteReader();
@@ -298,5 +347,86 @@ namespace PosApp.ViewModel
             }
         }
 
+        private void LoadCategories()
+        {
+            string sql = """
+                        SELECT * 
+                        FROM Categories
+                        WHERE DeletedAt IS NULL;
+                """;
+            var connection = _globalStore.CurrentGlobal.Connection;
+            if (connection != null)
+            {
+                var command = new SqlCommand(sql, connection);
+                var reader = command.ExecuteReader();
+                var _categories = new ObservableCollection<Category>();
+
+                while (reader.Read())
+                {
+                    Category category = new Category()
+                    {
+                        CategoryID = (string)reader["CategoryID"],
+                        CategoryName = (string)reader["CategoryName"],
+                    };
+
+                    _categories.Add(category);
+                }
+
+                reader.Close();
+
+
+                Categories = _categories;
+
+
+            }
+        }
+
+        public virtual void LoadProducts(GlobalStore globalStore)
+        {
+            _globalStore = globalStore;
+
+            foreach (var purchaseDetail in PurchaseDetails)
+            {
+                purchaseDetail.LoadProducts(_globalStore);
+            }
+        }
+
+        public string? this[string columnName]
+        {
+            get
+            {
+                if (columnName == nameof(DisplayID))
+                {
+                    return ValidationHelper.ValidateNotEmpty("DisplayID", false, DisplayID);
+                }
+                if (columnName == nameof(SupplierID))
+                {
+                    return ValidationHelper.ValidateNotEmpty("Supplier Name", false, SupplierName);
+                }
+
+                if (columnName == nameof(PaymentID))
+                {
+                    return ValidationHelper.ValidateNotEmpty("Supplier Name", false, SupplierName);
+                }
+
+
+
+                return null;
+            }
+        }
+
+        public string? Error
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(this[nameof(DisplayID)]) ||
+                    !string.IsNullOrEmpty(this[nameof(SupplierName)]) ||
+                    !string.IsNullOrEmpty(this[nameof(PaymentName)]))
+                {
+                    return "Error";
+                }
+                return null;
+            }
+        }
     }
 }

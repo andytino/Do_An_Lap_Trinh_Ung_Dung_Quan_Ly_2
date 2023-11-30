@@ -8,6 +8,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800" d:Background="White">
 
+    <UserControl.Resources>
+        <ControlTemplate x:Key="ErrorTemplate">
+            <StackPanel>
+                <AdornedElementPlaceholder x:Name="placeholder"/>
+                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" Margin="0,10,0,0" FontSize="10"/>
+            </StackPanel>
+        </ControlTemplate>
+    </UserControl.Resources>
+    
     <Border Background="white" Padding="10,20,10,20">
         <Border  CornerRadius="20"
             BorderThickness="5"
@@ -54,13 +63,14 @@
                                     Background="{StaticResource panelBlue40Color}" 
                                     CornerRadius="15">
                                     <TextBox x:Name="displayIDTextBox" 
-                                         Text="{Binding DispayID}" 
+                                         Text="{Binding DisplayID, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                          d:Text="PX-1"
                                          TextWrapping="Wrap"
                                          Background="Transparent"
                                          BorderThickness="0"
                                          Padding="5"
-                                         Width="200"/>
+                                         Width="200"
+                                             Validation.ErrorTemplate="{StaticResource ErrorTemplate}"/>
                                 </Border>
                             </StackPanel>
 
@@ -74,10 +84,11 @@
                                         Background="{StaticResource panelBlue40Color}" 
                                         CornerRadius="15">
                                     <ComboBox ItemsSource="{Binding Suppliers}"  
-                                              SelectedValue="{Binding SupplierID, Mode=TwoWay}"  
+                                              SelectedValue="{Binding SupplierID, Mode=TwoWay, ValidatesOnDataErrors=True}"  
                                               DisplayMemberPath="SupplierName" 
                                               SelectedValuePath="SupplierID" 
-                                              BorderThickness="0" Background="Transparent"  Width="200"/>
+                                              BorderThickness="0" Background="Transparent"  Width="200"
+                                              Validation.ErrorTemplate="{StaticResource ErrorTemplate}"/>
                                 </Border>
                             </StackPanel>
 
@@ -91,10 +102,10 @@
                                         Background="{StaticResource panelBlue40Color}" 
                                         CornerRadius="15">
                                     <ComboBox ItemsSource="{Binding PaymentMethods}"  
-                                              SelectedValue="{Binding PaymentID, Mode=TwoWay}"  
+                                              SelectedValue="{Binding PaymentID, Mode=TwoWay, ValidatesOnDataErrors=True}"  
                                               DisplayMemberPath="MethodName" 
                                               SelectedValuePath="PaymentID" 
-                                              BorderThickness="0" Background="Transparent"  Width="200"/>
+                                              BorderThickness="0" Background="Transparent"  Width="200" Validation.ErrorTemplate="{StaticResource ErrorTemplate}"/>
                                 </Border>
                             </StackPanel>
 
@@ -148,8 +159,9 @@
                             <StackPanel>
                                 <TextBlock Text="Detail" FontWeight="Bold"></TextBlock>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Product name" FontWeight="Bold" Width="250"></TextBlock>
-                                    <TextBlock Text=" Quatity" FontWeight="Bold" Width="150" Margin="30,0,0,0"></TextBlock>
+                                    <TextBlock Text="Category name" FontWeight="Bold" Width="250"></TextBlock>
+                                    <TextBlock Text="Product name" FontWeight="Bold" Width="100"></TextBlock>
+                                    <TextBlock Text=" Quatity" FontWeight="Bold" Width="150" Margin="100,0,0,0"></TextBlock>
                                     <TextBlock Text=" Price" FontWeight="Bold" Margin="20,0,0,0"></TextBlock>
                                 </StackPanel>
                             </StackPanel>
@@ -160,10 +172,10 @@
 
                     </Grid>
                     <Grid Grid.Row="3" Grid.ColumnSpan="3">
-                        <ItemsControl  ItemsSource="{Binding PurchaseDetailList}">
+                        <ItemsControl  ItemsSource="{Binding PurchaseDetails}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <component:PurchaseDetailFormView/>
+                                    <component:PurchaseDetailFormView />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -176,7 +188,7 @@
                     <Grid Grid.Row="5" Grid.ColumnSpan="3">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
                             <Button Style="{StaticResource primaryBtn}"
-                                    Command="{Binding SaveCommand}"
+                                    Command="{Binding ValidateCommand}"
                                     Content="Save" 
                                     VerticalAlignment="Center" 
                                     Margin="0,0,20,0" Width="100"/>

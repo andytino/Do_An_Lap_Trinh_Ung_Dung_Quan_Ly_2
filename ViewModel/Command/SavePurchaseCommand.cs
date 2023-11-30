@@ -54,7 +54,7 @@ namespace PosApp.ViewModel.Command
             int rows = insertCommand.ExecuteNonQuery();
             if(rows > 0 )
             {
-                var purchaseDetailList = _purchaseFormViewModel.PurchaseDetailList;
+                var purchaseDetailList = _purchaseFormViewModel.PurchaseDetails;
                 foreach (var purchaseDetail in purchaseDetailList)
                 {
                     string insertPurchaseDetailSql = """

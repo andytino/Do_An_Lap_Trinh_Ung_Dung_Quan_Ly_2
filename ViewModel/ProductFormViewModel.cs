@@ -31,7 +31,6 @@ namespace PosApp.ViewModel
         private ObservableCollection<Category> _categories;
         private ObservableCollection<Unit> _units;
 
-        private Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
         public ObservableCollection<Category> Categories
         {
             get { return _categories; }
@@ -311,12 +310,12 @@ namespace PosApp.ViewModel
 
                 if (columnName == nameof(CategoryID))
                 {
-                    return ValidationHelper.ValidateNotEmpty("Category ID", false, CategoryID);
+                    return ValidationHelper.ValidateNotEmpty("Category Name", false, CategoryID);
                 }
 
                 if (columnName == nameof(UnitID))
                 {
-                    return ValidationHelper.ValidateNotEmpty("Unit ID", false, UnitID);
+                    return ValidationHelper.ValidateNotEmpty("Unit", false, UnitID);
                 }
 
                 if (columnName == nameof(ProductImageSource))
